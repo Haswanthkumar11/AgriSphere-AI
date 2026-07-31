@@ -1,0 +1,37 @@
+@import './tokens.css';
+
+:root {
+  /* Alias variables to theme tokens for 100% backward compatibility */
+  --soil: var(--theme-soil);
+  --soil-dark: var(--theme-soil-dark);
+  --wheat: var(--theme-wheat);
+  --wheat-deep: var(--theme-wheat-deep);
+  --terracotta: var(--theme-terracotta);
+  --sky: var(--theme-sky);
+  --paper: var(--theme-paper);
+  --paper-dim: var(--theme-paper-dim);
+  --ink: var(--theme-ink);
+  --ink-soft: var(--theme-ink-soft);
+  --line: var(--theme-line);
+  --good: var(--theme-success);
+  --warn: var(--theme-warning);
+  --bad: var(--theme-error);
+
+  /* Spacing & Geometry */
+  --radius: 18px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 22px;
+
+  /* Shadows & Elevation */
+  --shadow: 0 6px 20px rgba(43, 32, 10, 0.10);
+  --shadow-sm: 0 2px 8px rgba(43, 32, 10, 0.08);
+  --shadow-lg: 0 12px 40px rgba(43, 32, 10, 0.15);
+
+  /* Typography */
+  --font-body: 'Work Sans', system-ui, sans-serif;
+  --font-display: 'Fraunces', Georgia, serif;
+
+  /* Transitions */
+  --transition: 0.15s ease;
+}

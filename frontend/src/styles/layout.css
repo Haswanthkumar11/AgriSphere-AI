@@ -1,0 +1,80 @@
+/* AgriSphere AI — Layout Styles */
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(217, 164, 65, 0.10), transparent 40%),
+    var(--paper);
+  position: relative;
+  padding-bottom: 92px;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+.section { padding: 14px 20px; }
+
+.greet-row {
+  padding: 16px 20px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.greet-row .hello { font-size: 13px; color: var(--ink-soft); }
+.greet-row .name  { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--soil-dark); }
+
+.back-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.screen-title { font-size: 19px; font-weight: 700; }
+.screen-sub   { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
+
+.lang-select-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--soil) 0%, #234030 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.lang-select-page h1 {
+  color: var(--paper);
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.lang-select-page p {
+  color: rgba(251, 246, 236, 0.75);
+  font-size: 14px;
+  margin-bottom: 40px;
+}
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.admin-sidebar {
+  width: 240px;
+  background: var(--soil-dark);
+  color: var(--paper);
+  padding: 24px 0;
+  flex: none;
+  position: relative;
+}
+
+.admin-main {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}

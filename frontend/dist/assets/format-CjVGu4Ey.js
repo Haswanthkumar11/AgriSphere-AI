@@ -1,0 +1,1 @@
+const o=t=>`₹${Number(t).toLocaleString("en-IN")}`,a=t=>{const r=Math.abs(Number(t)).toFixed(1);return t>=0?`▲ ${r}%`:`▼ ${r}%`},e=t=>t>=1e6?`${(t/1e6).toFixed(1)}M`:t>=1e3?`${(t/1e3).toFixed(1)}K`:String(t);export{a,e as b,o as f};

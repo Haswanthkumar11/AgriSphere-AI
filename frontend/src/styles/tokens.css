@@ -1,0 +1,25 @@
+/* AgriSphere AI — Theme Color Tokens */
+:root {
+  /* Core Theme Identity */
+  --theme-soil: #2C4A34;
+  --theme-soil-dark: #1B2F20;
+  --theme-leaf: #3E7C4A;
+  --theme-wheat: #D9A441;
+  --theme-wheat-deep: #B9822A;
+  --theme-terracotta: #BD5B34;
+  --theme-sky: #3E7C8C;
+  --theme-grain: #FFF3D6;
+  --theme-paper: #FBF6EC;
+  --theme-paper-dim: #F1E9D8;
+  --theme-ink: #22281F;
+  --theme-ink-soft: #5B5E51;
+  --theme-line: #E1D6BC;
+
+  /* Semantic Theme Aliases */
+  --theme-primary: var(--theme-soil);
+  --theme-secondary: var(--theme-wheat);
+  --theme-success: var(--theme-leaf);
+  --theme-warning: #C4831A;
+  --theme-error: #B5402A;
+  --theme-info: var(--theme-sky);
+}

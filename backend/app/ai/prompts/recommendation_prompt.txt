@@ -1,0 +1,4 @@
+Generate 3 clear, actionable next steps for a farmer based on the diagnosed crop disease.
+Step 1 must specify the immediate treatment and optimal spray window.
+Step 2 must specify an irrigation or cultural prevention practice.
+Step 3 must recommend a rescan timeline to evaluate recovery.
