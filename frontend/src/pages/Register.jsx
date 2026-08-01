@@ -65,7 +65,7 @@ export default function Register() {
         <form onSubmit={handleSubmit}>
           <div style={{ display: 'grid', gap: 16 }}>
             <FieldSet label={t('fullName')}>
-              <input type="text" value={form.name} onChange={set('name')} placeholder="Ramesh Kumar" required />
+              <input type="text" value={form.name} onChange={set('name')} placeholder="e.g. Haswanth Kumar" required />
             </FieldSet>
 
             <FieldSet label={t('phone')}>

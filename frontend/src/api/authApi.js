@@ -17,3 +17,6 @@ export const updateProfile = (payload) =>
 
 export const changePassword = (currentPassword, newPassword) =>
   client.post('/api/v1/auth/change-password', { current_password: currentPassword, new_password: newPassword });
+
+export const getUsers = () =>
+  client.get('/api/v1/auth/users');

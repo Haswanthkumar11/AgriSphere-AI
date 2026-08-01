@@ -12,10 +12,10 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState({
-    name: user?.name || 'Ramesh Kumar',
+    name: user?.name || '',
     region: user?.region || 'Tirupati, Andhra Pradesh',
     crop: user?.crop_type || 'Tomato',
-    land: user?.land_size_acres || '3.5',
+    land: user?.land_size_acres || '1.0',
   });
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));

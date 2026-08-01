@@ -11,6 +11,10 @@ def get_by_id(db: Session, farmer_id: str) -> Farmer | None:
     return db.query(Farmer).filter(Farmer.id == farmer_id).first()
 
 
+def list_all(db: Session) -> list[Farmer]:
+    return db.query(Farmer).order_by(Farmer.created_at.desc()).all()
+
+
 def create(
     db: Session,
     name: str,

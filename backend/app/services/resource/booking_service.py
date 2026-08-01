@@ -15,8 +15,8 @@ def _format_booking_dict(bkg: any, db: Session) -> dict:
     equip_name = equip.name if equip else "Equipment"
     equip_price = equip.price_per_day if equip else 650.0
 
-    owner_name = "Suresh Reddy"
-    owner_phone = "+919876543210"
+    owner_name = "Equipment Owner"
+    owner_phone = ""
 
     if bkg.owner_id:
         owner_farmer = db.query(Farmer).filter(Farmer.id == bkg.owner_id).first()
@@ -24,8 +24,8 @@ def _format_booking_dict(bkg: any, db: Session) -> dict:
             owner_name = owner_farmer.name
             owner_phone = owner_farmer.phone
 
-    requester_name = "Ramesh Kumar"
-    requester_phone = "+919876543210"
+    requester_name = "Farmer"
+    requester_phone = ""
 
     if bkg.requester_id:
         req_farmer = db.query(Farmer).filter(Farmer.id == bkg.requester_id).first()

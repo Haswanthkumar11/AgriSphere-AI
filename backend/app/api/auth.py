@@ -46,3 +46,23 @@ def get_me(current_user: CurrentUser = Depends(get_current_user), db: Session = 
         },
         message="User profile retrieved",
     )
+
+
+@router.get("/users", summary="List All Registered Users")
+def list_users(db: Session = Depends(get_db)):
+    """Returns list of registered database users."""
+    users = farmer_repository.list_all(db)
+    formatted = [
+        {
+            "id": u.id,
+            "name": u.name,
+            "phone": u.phone,
+            "role": u.role,
+            "region": u.region,
+            "crop_type": u.crop_type,
+            "land_size_acres": u.land_size_acres,
+            "status": "active",
+        }
+        for u in users
+    ]
+    return success_response(data=formatted, message="Registered users retrieved")
