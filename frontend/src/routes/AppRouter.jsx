@@ -4,9 +4,11 @@ import { ROUTES } from '@constants/routes';
 
 import GuestLayout    from '@layouts/GuestLayout';
 import FarmerLayout   from '@layouts/FarmerLayout';
+import OfficerLayout  from '@layouts/OfficerLayout';
 import AdminLayout    from '@layouts/AdminLayout';
-import ProtectedRoute from './ProtectedRoute';
 import GuestRoute     from './GuestRoute';
+import FarmerRoute    from './FarmerRoute';
+import OfficerRoute   from './OfficerRoute';
 import AdminRoute     from './AdminRoute';
 import Loader         from '@components/ui/Loader';
 
@@ -92,8 +94,8 @@ export default function AppRouter() {
             <Route path={ROUTES.REGISTER}         element={<GuestRoute><Register /></GuestRoute>} />
           </Route>
 
-          {/* Farmer routes (protected) */}
-          <Route element={<ProtectedRoute><FarmerLayout /></ProtectedRoute>}>
+          {/* Farmer workspace routes (gated strictly to role='farmer') */}
+          <Route element={<FarmerRoute><FarmerLayout /></FarmerRoute>}>
             <Route path={ROUTES.DASHBOARD}       element={<Dashboard />} />
             <Route path={ROUTES.SCAN}            element={<ScanPage />} />
             <Route path={ROUTES.WEATHER}         element={<WeatherPage />} />
@@ -111,10 +113,12 @@ export default function AppRouter() {
             <Route path={ROUTES.STORAGE_ADVICE}  element={<StorageAdvicePage />} />
           </Route>
 
-          {/* Extension Officer Portal */}
-          <Route path={ROUTES.OFFICER_DASHBOARD} element={<OfficerDashboard />} />
+          {/* Extension Officer Portal (gated strictly to role='officer' with OfficerLayout sidebar) */}
+          <Route element={<OfficerRoute><OfficerLayout /></OfficerRoute>}>
+            <Route path={ROUTES.OFFICER_DASHBOARD} element={<OfficerDashboard />} />
+          </Route>
 
-          {/* Admin routes (protected + role-gated) */}
+          {/* Admin Control Center (gated strictly to role='admin' with AdminLayout sidebar) */}
           <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
             <Route path={ROUTES.ADMIN}           element={<Navigate to={ROUTES.ADMIN_DASHBOARD} replace />} />
             <Route path={ROUTES.ADMIN_DASHBOARD} element={<AdminDashboard />} />
