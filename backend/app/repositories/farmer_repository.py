@@ -1,64 +1,48 @@
-"""Farmer table access — queries & writes."""
+"""
+AgriSphere AI — Farmer & User Repository Access
+Handles database queries & writes for users, user_profiles, and farmers tables.
+"""
 from sqlalchemy.orm import Session
+from ..models.user import User
+from ..models.user_profile import UserProfile
 from ..models.farmer import Farmer
 
 
-def get_by_phone(db: Session, phone: str) -> Farmer | None:
-    return db.query(Farmer).filter(Farmer.phone == phone).first()
+def get_user_by_phone(db: Session, phone: str) -> User | None:
+    return db.query(User).filter(User.phone == phone.strip()).first()
 
 
-def get_by_id(db: Session, farmer_id: str) -> Farmer | None:
-    return db.query(Farmer).filter(Farmer.id == farmer_id).first()
+def get_user_by_id(db: Session, user_id: str) -> User | None:
+    return db.query(User).filter(User.id == user_id).first()
 
 
-def list_all(db: Session) -> list[Farmer]:
-    return db.query(Farmer).order_by(Farmer.created_at.desc()).all()
+def get_profile_by_user_id(db: Session, user_id: str) -> UserProfile | None:
+    return db.query(UserProfile).filter(UserProfile.user_id == user_id).first()
 
 
-def create(
-    db: Session,
-    name: str,
-    phone: str,
-    password_hash: str | None = None,
-    role: str = "farmer",
-    region: str | None = None,
-    crop_type: str | None = None,
-    land_size_acres: float | None = None,
-) -> Farmer:
-    # Security Rule: Registration must ALWAYS default to role="farmer" unless overridden by seed/admin
-    safe_role = "farmer" if role not in ["farmer", "owner", "officer", "admin"] else role
-    farmer = Farmer(
-        name=name,
-        phone=phone,
-        password_hash=password_hash,
-        role=safe_role,
-        region=region or "Tirupati, Andhra Pradesh",
-        crop_type=crop_type or "Tomato",
-        land_size_acres=land_size_acres if land_size_acres is not None else 1.0,
+def get_farmer_by_user_id(db: Session, user_id: str) -> Farmer | None:
+    return db.query(Farmer).filter(Farmer.user_id == user_id).first()
+
+
+def list_all_farmers(db: Session) -> list[dict]:
+    """Returns list of all farmers joining user, user_profile, and farmer table."""
+    results = (
+        db.query(User, UserProfile, Farmer)
+        .join(UserProfile, UserProfile.user_id == User.id)
+        .outerjoin(Farmer, Farmer.user_id == User.id)
+        .order_by(User.created_at.desc())
+        .all()
     )
-    db.add(farmer)
-    db.commit()
-    db.refresh(farmer)
-    return farmer
-
-
-def update_password(db: Session, farmer_id: str, new_password_hash: str) -> Farmer | None:
-    farmer = get_by_id(db, farmer_id)
-    if not farmer:
-        return None
-    farmer.password_hash = new_password_hash
-    db.commit()
-    db.refresh(farmer)
-    return farmer
-
-
-def update_role(db: Session, farmer_id: str, new_role: str) -> Farmer | None:
-    farmer = get_by_id(db, farmer_id)
-    if not farmer:
-        return None
-    if new_role not in ["farmer", "owner", "officer", "admin"]:
-        raise ValueError("Invalid role specified")
-    farmer.role = new_role
-    db.commit()
-    db.refresh(farmer)
-    return farmer
+    formatted = []
+    for u, prof, f in results:
+        formatted.append({
+            "id": u.id,
+            "name": prof.full_name,
+            "phone": u.phone,
+            "role": prof.role,
+            "status": prof.status,
+            "crop_type": f.crop_type if f else "Tomato",
+            "land_size": f.land_size if f else 1.0,
+            "created_at": u.created_at.isoformat() if u.created_at else None,
+        })
+    return formatted

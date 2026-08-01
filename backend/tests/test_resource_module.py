@@ -6,7 +6,10 @@ from datetime import date, timedelta
 from fastapi.testclient import TestClient
 from app.main import app
 from app.database.session import SessionLocal, init_db
+from app.models.user import User
+from app.models.user_profile import UserProfile
 from app.models.farmer import Farmer
+from app.core.security import hash_password
 
 client = TestClient(app)
 
@@ -16,11 +19,25 @@ class TestResourceModule(unittest.TestCase):
     def setUpClass(cls):
         init_db()
         db = SessionLocal()
-        # Ensure test farmers exist for FK constraints
-        if not db.query(Farmer).filter(Farmer.id == "usr_demo").first():
-            db.add(Farmer(id="usr_demo", name="Test Owner", phone="+919999988881", role="farmer"))
-        if not db.query(Farmer).filter(Farmer.id == "usr_farmer_b").first():
-            db.add(Farmer(id="usr_farmer_b", name="Test Requester", phone="+919999988882", role="farmer"))
+        pwd = hash_password("password123")
+
+        # Ensure test farmers exist in users, user_profiles, and farmers tables
+        u_demo = db.query(User).filter(User.id == "usr_demo").first()
+        if not u_demo:
+            u_demo = User(id="usr_demo", phone="+919999988881", password_hash=pwd)
+            db.add(u_demo)
+            db.flush()
+            db.add(UserProfile(user_id=u_demo.id, full_name="Test Owner", role="farmer"))
+            db.add(Farmer(user_id=u_demo.id, crop_type="Tomato", land_size=2.0))
+
+        u_farmer_b = db.query(User).filter(User.id == "usr_farmer_b").first()
+        if not u_farmer_b:
+            u_farmer_b = User(id="usr_farmer_b", phone="+919999988882", password_hash=pwd)
+            db.add(u_farmer_b)
+            db.flush()
+            db.add(UserProfile(user_id=u_farmer_b.id, full_name="Test Requester", role="farmer"))
+            db.add(Farmer(user_id=u_farmer_b.id, crop_type="Paddy", land_size=1.5))
+
         db.commit()
         db.close()
 

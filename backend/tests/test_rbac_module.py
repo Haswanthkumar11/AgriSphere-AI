@@ -6,9 +6,10 @@ import unittest
 import time
 from fastapi.testclient import TestClient
 from app.main import app
-from app.database.session import init_db, get_db
-from app.repositories import farmer_repository
-from app.core.security import create_access_token
+from app.database.session import init_db, SessionLocal
+from app.models.user import User
+from app.models.user_profile import UserProfile
+from app.core.security import create_access_token, hash_password
 
 client = TestClient(app)
 
@@ -17,29 +18,20 @@ class TestRBACModule(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         init_db()
-        db = next(get_db())
-        admin_user = farmer_repository.get_by_phone(db, "+919999999999")
-        if not admin_user:
-            admin_user = farmer_repository.create(db, name="Admin Test User", phone="+919999999999", role="admin")
-        else:
-            farmer_repository.update_role(db, admin_user.id, "admin")
+        db = SessionLocal()
+        
+        # Ensure test admin user
+        admin_u = db.query(User).filter(User.phone == "+919999999999").first()
+        if not admin_u:
+            admin_u = User(phone="+919999999999", password_hash=hash_password("password123"))
+            db.add(admin_u)
+            db.flush()
+            db.add(UserProfile(user_id=admin_u.id, full_name="Admin Test User", role="admin"))
+            db.commit()
 
-        officer_user = farmer_repository.get_by_phone(db, "+919876543333")
-        if not officer_user:
-            officer_user = farmer_repository.create(db, name="Officer Test User", phone="+919876543333", role="officer")
-        else:
-            farmer_repository.update_role(db, officer_user.id, "officer")
-
-        owner_user = farmer_repository.get_by_phone(db, "+919876543222")
-        if not owner_user:
-            owner_user = farmer_repository.create(db, name="Owner Test User", phone="+919876543222", role="owner")
-        else:
-            farmer_repository.update_role(db, owner_user.id, "owner")
-
-        cls.admin_token = create_access_token(admin_user.id, admin_user.phone, role="admin")
-        cls.officer_token = create_access_token(officer_user.id, officer_user.phone, role="officer")
-        cls.owner_token = create_access_token(owner_user.id, owner_user.phone, role="owner")
+        cls.admin_token = create_access_token(admin_u.id, admin_u.phone, role="admin")
         cls.farmer_token = create_access_token("usr_demo", "+919876543210", role="farmer")
+        db.close()
 
     def test_01_registration_defaults_to_farmer(self):
         """Registration must always assign role='farmer' and ignore client 'role' overrides."""

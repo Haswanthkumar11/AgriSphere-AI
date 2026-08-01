@@ -7,7 +7,7 @@ export const loginAdmin = (phone, password) =>
   client.post('/api/v1/auth/admin-login', { phone, password });
 
 export const loginOfficer = (employeeIdOrPhone, password) =>
-  client.post('/api/v1/auth/officer-login', { employee_id_or_phone: employeeIdOrPhone, password });
+  client.post('/api/v1/auth/officer-login', { phone: employeeIdOrPhone, password });
 
 export const registerUser = (payload) =>
   client.post('/api/v1/auth/register', payload);
@@ -27,11 +27,8 @@ export const getUsers = () =>
 export const getAdminStats = () =>
   client.get('/api/v1/auth/admin-stats');
 
-export const provisionOfficer = (payload) =>
-  client.post('/api/v1/auth/officers', payload);
+export const provisionUser = (payload) =>
+  client.post('/api/v1/auth/provision', payload);
 
 export const getOfficers = () =>
-  client.get('/api/v1/auth/officers');
-
-export const revokeOfficer = (officerId) =>
-  client.delete(`/api/v1/auth/officers/${officerId}`);
+  client.get('/api/v1/auth/users');

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@hooks/useAuth';
 import { useLang } from '@hooks/useLang';
 import { ROUTES } from '@constants/routes';
@@ -26,7 +26,14 @@ export default function Login() {
 
     const result = await login(phone, password);
     if (result.success) {
-      navigate(ROUTES.DASHBOARD);
+      const role = (result.role || '').toLowerCase();
+      if (role === 'admin') {
+        navigate(ROUTES.ADMIN_DASHBOARD);
+      } else if (role === 'officer') {
+        navigate(ROUTES.OFFICER_DASHBOARD);
+      } else {
+        navigate(ROUTES.DASHBOARD);
+      }
     } else {
       const msg = result.error || '';
       if (msg.toLowerCase().includes('network') || msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('connect')) {
@@ -45,7 +52,7 @@ export default function Login() {
           <div className="mark">🌾</div>
           <div>
             <h1>AgriSphere AI</h1>
-            <p>{t('farmerLogin')}</p>
+            <p>Unified Portal Login (Farmer • Officer • Admin)</p>
           </div>
         </div>
 
@@ -55,7 +62,7 @@ export default function Login() {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              placeholder="+91 98765 43210"
+              placeholder="e.g. 8310557227, 9121679411, 7989612530"
               autoComplete="tel"
               required
             />
@@ -88,15 +95,6 @@ export default function Login() {
         <button className="btn-secondary" onClick={() => navigate(ROUTES.REGISTER)}>
           {t('noAccount')} {t('registerHere')}
         </button>
-
-        <div style={{ textAlign: 'center', marginTop: 20 }}>
-          <Link
-            to={ROUTES.ADMIN_LOGIN}
-            style={{ fontSize: 12, color: 'var(--ink-soft)', textDecoration: 'underline' }}
-          >
-            {t('adminLoginLink')}
-          </Link>
-        </div>
       </div>
     </div>
   );

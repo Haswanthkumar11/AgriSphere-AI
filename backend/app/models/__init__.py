@@ -2,9 +2,9 @@
 All SQLAlchemy models, re-exported here so a single
 `from .. import models` registers every table on Base.metadata.
 """
+from .user import User
+from .user_profile import UserProfile
 from .farmer import Farmer
-from .admin import Admin
-from .officer import Officer
 from .scan import ScanRecord
 from .grade import GradeRecord
 from .equipment import Equipment
@@ -15,9 +15,9 @@ from .harvest import HarvestSession, GrainScan, QualityAssessment, StorageRecomm
 from .notification import Notification
 
 __all__ = [
+    "User",
+    "UserProfile",
     "Farmer",
-    "Admin",
-    "Officer",
     "ScanRecord",
     "GradeRecord",
     "Equipment",
