@@ -1,11 +1,16 @@
-/* AgriSphere AI — Global CSS Master Entry */
+/* =========================================================
+   AgriSphere AI — Master Global Design System
+   Bootstrap 5 + Custom Premium CSS
+   ========================================================= */
+
+/* ---- Import Order ---- */
 @import './tokens.css';
 @import './variables.css';
 @import './base.css';
 @import './layout.css';
 @import './navbar.css';
-@import './buttons.css';
 @import './cards.css';
+@import './buttons.css';
 @import './forms.css';
 @import './animations.css';
 @import './utilities.css';

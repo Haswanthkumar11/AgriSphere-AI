@@ -1,93 +1,239 @@
-/* AgriSphere AI — Tables, Utilities & Badge Design System */
+/* AgriSphere AI — Utility Classes, Tables, Badges & Dividers */
 
-/* Modern Bootstrap Table Container */
-.table-responsive-container {
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid rgba(44, 74, 52, 0.09);
+/* ── Status Badges ── */
+.badge-as {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.badge-as.good    { background: #DCFCE7; color: #166534; }
+.badge-as.warn    { background: #FEF9C3; color: #854D0E; }
+.badge-as.bad     { background: #FEE2E2; color: #991B1B; }
+.badge-as.info    { background: #DBEAFE; color: #1D4ED8; }
+.badge-as.neutral { background: var(--paper-dim); color: var(--ink-soft); }
+
+/* Trend indicators */
+.trend.up   { color: #16A34A; font-weight: 700; font-size: 12.5px; }
+.trend.down { color: var(--terra); font-weight: 700; font-size: 12.5px; }
+
+/* ── Tables ── */
+.table-container {
+  background: var(--white);
+  border: 1.5px solid var(--line);
   border-radius: var(--radius-card);
   overflow: hidden;
   box-shadow: var(--shadow);
 }
 
-.table-modern {
+.table-as {
   width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  margin-bottom: 0;
-}
-
-.table-modern th {
-  background: var(--paper-dim);
-  color: var(--soil-dark);
-  font-weight: 700;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  padding: 14px 18px;
-  border-bottom: 1px solid var(--line);
-  white-space: nowrap;
-}
-
-.table-modern td {
-  padding: 16px 18px;
-  vertical-align: middle;
-  border-bottom: 1px solid rgba(44, 74, 52, 0.05);
+  border-collapse: collapse;
   font-size: 14px;
-  color: var(--ink);
 }
 
-.table-modern tbody tr:last-child td {
-  border-bottom: none;
+.table-as thead th {
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 13px 18px;
+  border-bottom: 1.5px solid var(--line);
+  white-space: nowrap;
+  text-align: left;
 }
 
-.table-modern tbody tr:hover {
-  background-color: var(--paper);
+.table-as tbody td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--paper-dim);
+  color: var(--ink-mid);
+  vertical-align: middle;
 }
 
-/* Status Badges */
-.badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.3;
-}
+.table-as tbody tr:last-child td { border-bottom: none; }
+.table-as tbody tr:hover { background: var(--paper); }
 
-.badge-pill.good { background: #E6F0E3; color: var(--theme-leaf); }
-.badge-pill.warn { background: #FFF3D6; color: var(--wheat-deep); }
-.badge-pill.bad  { background: #FBEAE5; color: var(--terracotta); }
-.badge-pill.info { background: #DFEEF1; color: var(--sky); }
-
-/* Skeleton Loader Animation */
-.skeleton-box {
-  background: linear-gradient(90deg, var(--paper-dim) 25%, #EFE5D3 50%, var(--paper-dim) 75%);
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite ease-in-out;
-  border-radius: var(--radius-sm);
-}
-
-@keyframes skeleton-loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Grid Layout Systems for Dashboard & Market Pages */
-.dashboard-grid {
+/* ── Dashboard Grid ── */
+.dashboard-grid-2 {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: 20px;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.dashboard-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 @media (min-width: 576px) {
-  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+  .dashboard-grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 @media (min-width: 992px) {
-  .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+  .dashboard-grid-3 { grid-template-columns: repeat(3, 1fr); }
 }
-@media (min-width: 1200px) {
-  .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* ── Divider ── */
+.divider {
+  height: 1px;
+  background: var(--line);
+  margin: 20px 0;
 }
+
+.divider-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0;
+  color: var(--ink-soft);
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.divider-label::before, .divider-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── Page Header Block ── */
+.page-header-block {
+  padding: 4px 0 20px;
+}
+
+.page-header-block .page-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--soil);
+  margin-bottom: 4px;
+}
+
+.page-header-block .page-sub {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ── Online / Offline Indicator ── */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #DCFCE7;
+  color: #166534;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.status-pill.offline {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+/* ── Notification badge ── */
+.notif-dot {
+  position: absolute;
+  top: -3px; right: -3px;
+  width: 10px; height: 10px;
+  background: var(--terra);
+  border-radius: 50%;
+  border: 2px solid var(--white);
+  animation: pulse 2s infinite;
+}
+
+/* ── Icon buttons ── */
+.icon-btn {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--paper-dim);
+  border: 1.5px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all var(--t-fast) var(--ease);
+  flex-shrink: 0;
+}
+
+.icon-btn:hover {
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+/* ── Passport Card (Harvest Passport) ── */
+.passport-card {
+  background: var(--grad-primary);
+  color: #fff;
+  border-radius: var(--radius-card);
+  padding: 24px;
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+}
+
+.passport-card::before {
+  content: '';
+  position: absolute;
+  top: -20px; right: -20px;
+  width: 140px; height: 140px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+
+/* ── Notification List Item ── */
+.notif-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px;
+  border-bottom: 1px solid var(--paper-dim);
+  transition: background var(--t-fast) var(--ease);
+}
+
+.notif-item:last-child { border-bottom: none; }
+.notif-item:hover { background: var(--paper); }
+.notif-item.unread { background: #F0FDF4; }
+
+.notif-item .notif-icon {
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  background: var(--paper-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.notif-item .notif-body { flex: 1; }
+.notif-item .notif-title { font-weight: 700; font-size: 14px; color: var(--soil); margin-bottom: 3px; }
+.notif-item .notif-sub   { font-size: 12.5px; color: var(--ink-soft); }
+
+/* ── Text Utilities ── */
+.text-soil   { color: var(--soil) !important; }
+.text-leaf   { color: var(--leaf) !important; }
+.text-wheat  { color: var(--wheat) !important; }
+.text-terra  { color: var(--terra) !important; }
+.text-soft   { color: var(--ink-soft) !important; }
+.text-mid    { color: var(--ink-mid) !important; }
+
+.fw-800 { font-weight: 800 !important; }
+.fw-700 { font-weight: 700 !important; }
+.fw-600 { font-weight: 600 !important; }
+
+.fs-11  { font-size: 11px !important; }
+.fs-12  { font-size: 12px !important; }
+.fs-13  { font-size: 13px !important; }
+.fs-14  { font-size: 14px !important; }
+.fs-18  { font-size: 18px !important; }
+.fs-22  { font-size: 22px !important; }

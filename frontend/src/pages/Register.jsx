@@ -51,8 +51,9 @@ export default function Register() {
   };
 
   return (
-    <div className="auth-page" style={{ padding: '20px 20px 100px' }}>
-      <div className="auth-card">
+    <div className="auth-page" style={{ padding: '24px 16px 60px' }}>
+      <div className="auth-card" style={{ maxWidth: 480 }}>
+        {/* Brand Header */}
         <div className="auth-logo">
           <div className="mark">🌾</div>
           <div>
@@ -62,30 +63,54 @@ export default function Register() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <FieldSet label={t('fullName')}>
-            <input type="text" value={form.name} onChange={set('name')} placeholder="Ramesh Kumar" required />
-          </FieldSet>
+          <div style={{ display: 'grid', gap: 16 }}>
+            <FieldSet label={t('fullName')}>
+              <input type="text" value={form.name} onChange={set('name')} placeholder="Ramesh Kumar" required />
+            </FieldSet>
 
-          <FieldSet label={t('phone')}>
-            <input type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" required />
-          </FieldSet>
+            <FieldSet label={t('phone')}>
+              <input type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" required />
+            </FieldSet>
 
-          <FieldSet label={t('password')}>
-            <input type="password" value={form.password} onChange={set('password')} placeholder="••••••••" required />
-          </FieldSet>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <FieldSet label={t('password')}>
+                <input type="password" value={form.password} onChange={set('password')} placeholder="••••••" required />
+              </FieldSet>
 
-          <FieldSet label={t('confirmPassword')}>
-            <input type="password" value={form.confirmPassword} onChange={set('confirmPassword')} placeholder="••••••••" required />
-          </FieldSet>
+              <FieldSet label={t('confirmPassword')}>
+                <input type="password" value={form.confirmPassword} onChange={set('confirmPassword')} placeholder="••••••" required />
+              </FieldSet>
+            </div>
+
+            <div className="divider-label" style={{ margin: '4px 0' }}>Farm Details (Optional)</div>
+
+            <FieldSet label="Region">
+              <input type="text" value={form.region} onChange={set('region')} placeholder="Tirupati, Andhra Pradesh" />
+            </FieldSet>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <FieldSet label="Primary Crop">
+                <input type="text" value={form.crop_type} onChange={set('crop_type')} placeholder="Tomato" />
+              </FieldSet>
+
+              <FieldSet label="Land (Acres)">
+                <input type="number" value={form.land_size_acres} onChange={set('land_size_acres')} placeholder="1.0" min="0.1" step="0.1" />
+              </FieldSet>
+            </div>
+          </div>
 
           {error && (
-            <p style={{ color: 'var(--bad)', fontSize: 13, marginBottom: 12, fontWeight: 600 }}>{error}</p>
+            <div className="error-alert" style={{ marginTop: 16 }}>
+              <span>⚠️</span> {error}
+            </div>
           )}
 
-          <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? 'Creating account...' : t('registerBtn')}
+          <button type="submit" className="btn-primary btn-lg" disabled={loading} style={{ marginTop: 20 }}>
+            {loading ? '⏳ Creating account…' : '🌱 Create Account'}
           </button>
         </form>
+
+        <div className="divider-label">already have an account?</div>
 
         <button className="btn-secondary" onClick={() => navigate(ROUTES.LOGIN)}>
           {t('haveAccount')} {t('loginHere')}

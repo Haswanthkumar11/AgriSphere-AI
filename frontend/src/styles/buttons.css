@@ -1,6 +1,8 @@
-/* AgriSphere AI — Premium Button Design System */
+/* AgriSphere AI — Premium Button System */
 
-.btn-primary, .btn-secondary, .btn-danger, .btn-success, .btn-outline {
+/* ── Shared Reset ── */
+.btn-primary, .btn-secondary, .btn-danger, .btn-success, .btn-outline,
+.btn-farmer, .btn-farmer-primary, .btn-farmer-outline {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -9,123 +11,180 @@
   padding: 12px 24px;
   border-radius: var(--radius-btn);
   font-family: var(--font-body);
-  font-size: 14.5px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1;
-  text-decoration: none;
   cursor: pointer;
-  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
+  transition: transform var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease), opacity var(--t-fast) var(--ease);
   user-select: none;
   outline: none;
+  text-decoration: none;
+  white-space: nowrap;
+  width: 100%;           /* full width by default for mobile */
 }
 
-/* Primary Button */
-.btn-primary {
-  background: var(--gradient-primary);
+/* ── Primary ── */
+.btn-primary, .btn-farmer-primary, .btn-farmer {
+  background: var(--grad-primary);
   color: #ffffff !important;
-  border-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 14px rgba(44, 74, 52, 0.25);
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(30,58,40,0.28);
 }
 
-.btn-primary:hover:not(:disabled) {
+.btn-primary:hover:not(:disabled),
+.btn-farmer-primary:hover:not(:disabled),
+.btn-farmer:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(44, 74, 52, 0.35);
-  background: linear-gradient(135deg, #355A3F 0%, #203827 100%);
-  color: #ffffff;
+  box-shadow: 0 8px 22px rgba(30,58,40,0.36);
+  background: linear-gradient(135deg, #162B1E 0%, #1E3A28 100%);
+  color: #ffffff !important;
 }
 
-.btn-primary:focus-visible {
-  box-shadow: 0 0 0 3.5px rgba(44, 74, 52, 0.35);
-}
-
-.btn-primary:active:not(:disabled) {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Secondary Button */
+/* ── Secondary ── */
 .btn-secondary {
-  background: #ffffff;
-  color: var(--soil-dark) !important;
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-subtle);
+  background: var(--white);
+  color: var(--soil) !important;
+  border-color: var(--line);
+  box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary:hover:not(:disabled) {
-  transform: translateY(-2px);
   background: var(--paper-dim);
-  border-color: rgba(44, 74, 52, 0.25);
+  border-color: var(--line-dark);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }
 
-.btn-secondary:focus-visible {
-  box-shadow: 0 0 0 3.5px rgba(44, 74, 52, 0.18);
-}
-
-.btn-secondary:active:not(:disabled) {
-  transform: translateY(0) scale(0.98);
-}
-
-/* Outline Button */
-.btn-outline {
+/* ── Outline ── */
+.btn-outline, .btn-farmer-outline {
   background: transparent;
-  color: var(--soil-dark) !important;
-  border: 1.5px solid var(--soil);
+  color: var(--soil) !important;
+  border-color: var(--line-dark);
+  box-shadow: var(--shadow-xs);
 }
 
-.btn-outline:hover:not(:disabled) {
-  background: var(--soil);
-  color: #ffffff !important;
-  transform: translateY(-2px);
+.btn-outline:hover:not(:disabled),
+.btn-farmer-outline:hover:not(:disabled) {
+  background: var(--paper-dim);
+  border-color: var(--soil-mid);
+  transform: translateY(-1px);
 }
 
-/* Success Button */
+/* ── Success ── */
 .btn-success {
-  background: var(--gradient-emerald);
+  background: var(--grad-leaf);
   color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);
+  box-shadow: 0 4px 14px rgba(22,163,74,0.28);
 }
 
 .btn-success:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.38);
+  box-shadow: 0 8px 22px rgba(22,163,74,0.38);
 }
 
-/* Danger Button */
+/* ── Danger ── */
 .btn-danger {
-  background: var(--gradient-terracotta);
+  background: var(--grad-terra);
   color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(189, 91, 52, 0.28);
+  box-shadow: 0 4px 14px rgba(185,28,28,0.28);
 }
 
 .btn-danger:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(189, 91, 52, 0.38);
+  box-shadow: 0 8px 22px rgba(185,28,28,0.38);
 }
 
-/* Disabled State */
-.btn-primary:disabled, .btn-secondary:disabled, .btn-danger:disabled, .btn-success:disabled, .btn-outline:disabled {
-  opacity: 0.55;
+/* ── Disabled ── */
+.btn-primary:disabled, .btn-secondary:disabled, .btn-danger:disabled,
+.btn-success:disabled, .btn-outline:disabled, .btn-farmer:disabled,
+.btn-farmer-primary:disabled, .btn-farmer-outline:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
   transform: none !important;
   box-shadow: none !important;
 }
 
-/* Button Size Modifiers */
+/* ── Active press ── */
+.btn-primary:active:not(:disabled)      { transform: translateY(0) scale(0.98); }
+.btn-secondary:active:not(:disabled)    { transform: translateY(0) scale(0.98); }
+.btn-outline:active:not(:disabled)      { transform: translateY(0) scale(0.98); }
+.btn-farmer-outline:active:not(:disabled) { transform: translateY(0) scale(0.98); }
+
+/* ── Focus ring (accessibility) ── */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-success:focus-visible,
+.btn-danger:focus-visible {
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.35);
+}
+
+/* ── Sizes ── */
 .btn-sm {
-  min-height: 38px;
-  padding: 8px 16px;
-  font-size: 13px;
-  border-radius: var(--radius-md);
+  min-height: 36px !important;
+  padding: 7px 14px !important;
+  font-size: 12.5px !important;
+  border-radius: 9px !important;
 }
 
 .btn-lg {
-  min-height: 54px;
-  padding: 14px 32px;
-  font-size: 16px;
-  border-radius: var(--radius-btn);
+  min-height: 54px !important;
+  padding: 14px 32px !important;
+  font-size: 15.5px !important;
+  border-radius: 14px !important;
 }
 
-.btn-full {
+/* Width utility */
+.btn-auto { width: auto; }
+
+/* ── Quick Action Buttons (Dashboard grid) ── */
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
   width: 100%;
+  padding: 16px 16px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--t-base) var(--ease);
+  border: 1.5px solid var(--line);
+  background: var(--white);
+  color: var(--soil);
+  box-shadow: var(--shadow-sm);
 }
+
+.quick-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--leaf);
+}
+
+.quick-action-btn.primary {
+  background: var(--grad-primary);
+  color: #fff !important;
+  border-color: transparent;
+  box-shadow: var(--shadow-soil);
+}
+
+.quick-action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(30,58,40,0.35);
+  border-color: transparent;
+}
+
+.quick-action-btn.amber {
+  background: var(--grad-wheat);
+  color: #fff !important;
+  border-color: transparent;
+  box-shadow: 0 4px 14px rgba(217,119,6,0.28);
+}
+
+.quick-action-btn.amber:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(217,119,6,0.38);
+}
+
+.quick-action-btn .qab-icon { font-size: 20px; }

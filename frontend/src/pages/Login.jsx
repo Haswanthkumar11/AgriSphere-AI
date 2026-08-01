@@ -40,6 +40,7 @@ export default function Login() {
   return (
     <div className="auth-page">
       <div className="auth-card">
+        {/* Brand Header */}
         <div className="auth-logo">
           <div className="mark">🌾</div>
           <div>
@@ -48,7 +49,7 @@ export default function Login() {
           </div>
         </div>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="auth-form-group">
           <FieldSet label={t('phone')}>
             <input
               type="tel"
@@ -65,31 +66,30 @@ export default function Login() {
               type="password"
               value={password}
               onChange={(e) => setPass(e.target.value)}
-              placeholder="••••••••"
+              placeholder="Enter your password"
               autoComplete="current-password"
               required
             />
           </FieldSet>
 
           {error && (
-            <p style={{ color: 'var(--bad)', fontSize: 13, marginBottom: 12, fontWeight: 600 }}>
-              {error}
-            </p>
+            <div className="error-alert">
+              <span>⚠️</span> {error}
+            </div>
           )}
 
-          <button type="submit" className="btn-primary" disabled={isLoading}>
-            {isLoading ? <Loader variant="spinner" /> : t('loginBtn')}
+          <button type="submit" className="btn-primary btn-lg" disabled={isLoading} style={{ marginTop: 4 }}>
+            {isLoading ? <><Loader variant="spinner" /> Signing in…</> : `🔐 ${t('loginBtn')}`}
           </button>
         </form>
 
-        <button
-          className="btn-secondary"
-          onClick={() => navigate(ROUTES.REGISTER)}
-        >
+        <div className="divider-label">or</div>
+
+        <button className="btn-secondary" onClick={() => navigate(ROUTES.REGISTER)}>
           {t('noAccount')} {t('registerHere')}
         </button>
 
-        <div style={{ textAlign: 'center', marginTop: 16 }}>
+        <div style={{ textAlign: 'center', marginTop: 20 }}>
           <Link
             to={ROUTES.ADMIN_LOGIN}
             style={{ fontSize: 12, color: 'var(--ink-soft)', textDecoration: 'underline' }}

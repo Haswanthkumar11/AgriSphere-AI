@@ -13,10 +13,24 @@ export default function LanguageSelect() {
   };
 
   return (
-    <div className="lang-select-page">
-      <div style={{ fontSize: 52, marginBottom: 16 }}>🌾</div>
-      <h1>AgriSphere AI</h1>
-      <p>{t('chooseLanguageSub')}</p>
+    <div className="lang-select-page screen-enter">
+      {/* Hero Brand */}
+      <div className="hero-icon">🌾</div>
+
+      <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 30, fontWeight: 800, color: 'var(--soil)', marginBottom: 6 }}>
+        AgriSphere AI
+      </h1>
+      <p style={{ fontSize: 15, color: 'var(--ink-soft)', marginBottom: 8, maxWidth: 300 }}>
+        {t('chooseLanguageSub')}
+      </p>
+
+      <div style={{
+        display: 'inline-flex', alignItems: 'center', gap: 6,
+        background: '#DCFCE7', borderRadius: 20, padding: '5px 14px',
+        fontSize: 12, fontWeight: 700, color: '#166534', marginBottom: 36,
+      }}>
+        <span>🌐</span> Select your language to continue
+      </div>
 
       <div className="lang-btn-grid">
         {SUPPORTED_LANGUAGES.map((lang) => (
@@ -32,6 +46,10 @@ export default function LanguageSelect() {
           </button>
         ))}
       </div>
+
+      <p style={{ marginTop: 32, fontSize: 12, color: 'var(--ink-soft)', opacity: 0.7 }}>
+        AgriSphere AI v2.0 · Hackathon Edition
+      </p>
     </div>
   );
 }

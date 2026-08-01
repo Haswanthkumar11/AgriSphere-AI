@@ -1,25 +1,93 @@
-/* AgriSphere AI — Theme Color Tokens */
+/* AgriSphere AI — Premium Design Tokens */
 :root {
-  /* Core Theme Identity */
-  --theme-soil: #2C4A34;
-  --theme-soil-dark: #1B2F20;
-  --theme-leaf: #3E7C4A;
-  --theme-wheat: #D9A441;
-  --theme-wheat-deep: #B9822A;
-  --theme-terracotta: #BD5B34;
-  --theme-sky: #3E7C8C;
-  --theme-grain: #FFF3D6;
-  --theme-paper: #FBF6EC;
-  --theme-paper-dim: #F1E9D8;
-  --theme-ink: #22281F;
-  --theme-ink-soft: #5B5E51;
-  --theme-line: #E1D6BC;
+  /* ── Brand Palette ── */
+  --soil:         #1E3A28;
+  --soil-mid:     #2C4A34;
+  --soil-light:   #3E6B48;
+  --leaf:         #22C55E;
+  --leaf-dim:     #16A34A;
+  --wheat:        #F59E0B;
+  --wheat-deep:   #D97706;
+  --terra:        #DC2626;
+  --sky:          #0EA5E9;
+  --sky-dim:      #0284C7;
+  --purple:       #7C3AED;
+  --paper:        #F8FAF8;
+  --paper-dim:    #EEF2EE;
+  --white:        #FFFFFF;
+  --ink:          #111827;
+  --ink-mid:      #374151;
+  --ink-soft:     #6B7280;
+  --line:         #E5E7EB;
+  --line-dark:    #D1D5DB;
 
-  /* Semantic Theme Aliases */
-  --theme-primary: var(--theme-soil);
-  --theme-secondary: var(--theme-wheat);
-  --theme-success: var(--theme-leaf);
-  --theme-warning: #C4831A;
-  --theme-error: #B5402A;
-  --theme-info: var(--theme-sky);
+  /* Semantic aliases (keep backward compat) */
+  --theme-soil:    var(--soil-mid);
+  --theme-leaf:    var(--leaf);
+  --theme-wheat:   var(--wheat);
+  --theme-sky:     var(--sky);
+  --theme-primary: var(--soil-mid);
+  --theme-success: var(--leaf);
+  --theme-warning: var(--wheat);
+  --theme-error:   var(--terra);
+  --theme-info:    var(--sky);
+
+  /* Old aliases still used in pages */
+  --soil-dark:     var(--soil);
+  --wheat-deep:    #D97706;
+  --terracotta:    var(--terra);
+  --paper-dim:     #EEF2EE;
+  --ink-soft:      #6B7280;
+  --line:          #E5E7EB;
+  --good:          var(--leaf);
+  --warn:          var(--wheat);
+  --bad:           var(--terra);
+
+  /* ── Geometry ── */
+  --radius-xs:    6px;
+  --radius-sm:    10px;
+  --radius-md:    14px;
+  --radius-lg:    18px;
+  --radius-xl:    24px;
+  --radius-card:  18px;
+  --radius-btn:   12px;
+  --radius-input: 10px;
+  --radius-modal: 20px;
+  --radius:       18px;
+
+  /* ── 8px Spacing Scale ── */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px; --s5: 20px;
+  --s6: 24px; --s7: 28px; --s8: 32px; --s9: 36px; --s10: 48px;
+
+  /* ── Shadows (layered for depth) ── */
+  --shadow-xs:    0 1px 3px rgba(0,0,0,0.06);
+  --shadow-sm:    0 2px 8px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.04);
+  --shadow:       0 4px 16px rgba(0,0,0,0.07), 0 2px 6px rgba(0,0,0,0.04);
+  --shadow-md:    0 8px 24px rgba(0,0,0,0.08), 0 3px 8px rgba(0,0,0,0.04);
+  --shadow-lg:    0 16px 40px rgba(0,0,0,0.10), 0 6px 12px rgba(0,0,0,0.05);
+  --shadow-xl:    0 24px 64px rgba(0,0,0,0.12), 0 8px 20px rgba(0,0,0,0.06);
+  --shadow-glow:  0 0 0 3px rgba(34,197,94,0.25);
+  --shadow-soil:  0 8px 24px rgba(30,58,40,0.20);
+
+  /* ── Gradients ── */
+  --grad-primary:   linear-gradient(135deg, #1E3A28 0%, #2C4A34 100%);
+  --grad-leaf:      linear-gradient(135deg, #16A34A 0%, #22C55E 100%);
+  --grad-wheat:     linear-gradient(135deg, #D97706 0%, #F59E0B 100%);
+  --grad-terra:     linear-gradient(135deg, #B91C1C 0%, #DC2626 100%);
+  --grad-sky:       linear-gradient(135deg, #0284C7 0%, #0EA5E9 100%);
+  --grad-purple:    linear-gradient(135deg, #6D28D9 0%, #7C3AED 100%);
+  --grad-hero:      linear-gradient(135deg, #0F2619 0%, #1E3A28 50%, #2C4A34 100%);
+  --grad-bg:        linear-gradient(160deg, #F0FDF4 0%, #F8FAF8 50%, #ECFDF5 100%);
+
+  /* ── Typography ── */
+  --font-body:     'Work Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display:  'Fraunces', Georgia, serif;
+
+  /* ── Transitions ── */
+  --ease:          cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+  --t-fast:        0.15s;
+  --t-base:        0.25s;
+  --t-slow:        0.40s;
+  --transition:    0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }

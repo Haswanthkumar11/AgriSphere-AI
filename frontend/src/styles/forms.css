@@ -1,19 +1,24 @@
-/* AgriSphere AI — Form Controls & Inputs Design System */
+/* AgriSphere AI — Form & Input Controls */
 
-.form-group, .fieldset-block {
-  margin-bottom: 20px;
+.fieldset-block {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  margin-bottom: 18px;
 }
 
-label, .fieldset-label {
-  font-size: 13.5px;
+.fieldset-block:last-of-type { margin-bottom: 0; }
+
+.fieldset-label {
+  font-size: 13px;
   font-weight: 600;
-  color: var(--soil-dark);
-  margin-bottom: 4px;
+  color: var(--ink-mid);
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
+/* ── Universal input styling ── */
 input[type="text"],
 input[type="number"],
 input[type="tel"],
@@ -21,62 +26,106 @@ input[type="email"],
 input[type="password"],
 input[type="date"],
 select,
-textarea,
-.form-control,
-.form-select {
+textarea {
   width: 100%;
   min-height: 48px;
-  padding: 12px 16px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background-color: #ffffff;
+  padding: 11px 14px;
+  border-radius: var(--radius-input);
+  border: 1.5px solid var(--line);
+  background: var(--white);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: 14.5px;
-  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
-  outline: none;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
-}
-
-textarea {
-  min-height: 110px;
-  resize: vertical;
   line-height: 1.5;
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease), background var(--t-fast) var(--ease);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 input:focus,
 select:focus,
-textarea:focus,
-.form-control:focus,
-.form-select:focus {
-  border-color: var(--theme-leaf);
-  box-shadow: 0 0 0 3.5px rgba(62, 124, 74, 0.18);
-  background-color: #ffffff;
+textarea:focus {
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.20);
+  background: #FAFFFE;
 }
 
-input::placeholder,
-textarea::placeholder {
-  color: #A0A499;
+input::placeholder, textarea::placeholder { color: #9CA3AF; }
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
 }
 
-/* Invalid State */
-input.is-invalid, select.is-invalid, textarea.is-invalid {
-  border-color: var(--bad);
-  box-shadow: 0 0 0 3.5px rgba(181, 64, 42, 0.18);
+/* Validation states */
+input.error, select.error, textarea.error {
+  border-color: var(--terra);
+  box-shadow: 0 0 0 3px rgba(220,38,38,0.15);
 }
 
-/* File Upload Zone */
+/* Error message */
+.field-error {
+  font-size: 12.5px;
+  color: var(--terra);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ── Upload Zone ── */
 .upload-zone {
-  border: 2px dashed var(--line);
+  border: 2px dashed var(--line-dark);
   border-radius: var(--radius-card);
-  padding: 32px 24px;
+  padding: 36px 24px;
   text-align: center;
-  background: var(--paper-dim);
-  transition: border-color var(--transition), background-color var(--transition);
+  background: var(--paper);
   cursor: pointer;
+  transition: all var(--t-base) var(--ease);
 }
 
-.upload-zone:hover {
-  border-color: var(--theme-leaf);
-  background: #ffffff;
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--leaf);
+  background: #F0FDF4;
+  box-shadow: 0 0 0 3px rgba(34,197,94,0.12);
+}
+
+.upload-zone .upload-icon { font-size: 40px; margin-bottom: 10px; }
+.upload-zone .upload-title { font-weight: 700; font-size: 15px; color: var(--soil); margin-bottom: 4px; }
+.upload-zone .upload-sub   { font-size: 13px; color: var(--ink-soft); }
+
+/* ── Form Section Header ── */
+.form-section-header {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 14px 0 6px;
+  border-top: 1px solid var(--paper-dim);
+  margin-top: 4px;
+}
+
+/* ── Auth Form layout ── */
+.auth-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* ── Error alert box ── */
+.error-alert {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: #991B1B;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
