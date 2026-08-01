@@ -1,5 +1,31 @@
+# Dependencies & Virtual Envs
+node_modules/
 __pycache__/
 *.pyc
+.venv/
 venv/
-*.db
+
+# Environment files with sensitive credentials / API keys (NEVER COMMIT TO GIT)
 .env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+backend/.env
+frontend/.env
+*.env
+
+# Explicitly track .env.example files
+!backend/.env.example
+!frontend/.env.example
+!.env.example
+
+# SQLite databases & Local Storage
+*.db
+*.sqlite
+*.sqlite3
+
+# Build outputs
+dist/
+build/
+.output/

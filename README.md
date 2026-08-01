@@ -89,20 +89,36 @@ Yield Prediction        & Live Weather           (Hero AI System)         (Grain
 
 ## 🚀 Quickstart Guide
 
-### 1. Backend Server
+### 1. Backend Server Setup
 ```bash
 cd backend
+
+# 1. Create environment file from template
+cp .env.example .env
+
+# 2. Setup virtual environment & dependencies
 python -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+# 3. Launch FastAPI backend server
 uvicorn app.main:app --reload --port 8000
 ```
 - Interactive Swagger API Docs: `http://localhost:8000/docs`
 
-### 2. Frontend Development Server
+### 2. Frontend Development Setup
 ```bash
 cd frontend
+
+# 1. Create environment file from template
+cp .env.example .env
+
+# 2. Fill required values in .env (if needed)
+
+# 3. Install npm dependencies
 npm install
+
+# 4. Launch Vite development server
 npm run dev
 ```
 - App Local Server: `http://localhost:5173`
@@ -110,4 +126,4 @@ npm run dev
 ---
 
 ## 📄 License & Maintainer
-Maintained by the AgriSphere AI Engineering Team. Last updated: **2026-07-31**.
+Maintained by the AgriSphere AI Engineering Team. Last updated: **2026-08-01**.
