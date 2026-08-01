@@ -260,17 +260,21 @@
 
 /* ── Scan Frame ── */
 .scan-frame {
-  aspect-ratio: 1 / 1;
-  border-radius: 22px;
+  width: 100%;
+  max-width: 440px;
+  height: 260px;
+  max-height: 260px;
+  margin: 0 auto 16px auto;
+  border-radius: 20px;
   background:
-    repeating-linear-gradient(135deg, #2f4d34, #2f4d34 10px, #274127 10px, #274127 20px);
+    repeating-linear-gradient(135deg, #1E3A28, #1E3A28 10px, #162B1E 10px, #162B1E 20px);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow);
-  margin-bottom: 16px;
+  box-shadow: var(--shadow-md);
+  border: 2px solid var(--line);
 }
 
 .scan-frame .leaf-icon { font-size: 96px; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3)); }

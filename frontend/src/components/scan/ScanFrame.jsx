@@ -2,19 +2,33 @@ import { useRef } from 'react';
 import { useLang } from '@hooks/useLang';
 
 /**
- * ScanFrame — camera frame with corner decorations + scanline animation.
- * previewSrc: data URL of the chosen image
- * scanning: boolean — shows animated scanline
- * onImageChosen: callback with File object
+ * ScanFrame — compact camera frame with corner decorations + scanline animation.
+ * Constrained height/width so AI report cards remain immediately visible below.
  */
 export default function ScanFrame({ previewSrc, scanning = false, onImageChosen, apiOnline = false }) {
   const { t } = useLang();
   const inputRef = useRef(null);
 
   return (
-    <div className="scan-frame" onClick={() => inputRef.current?.click()} style={{ cursor: 'pointer' }}>
+    <div
+      className="scan-frame"
+      onClick={() => inputRef.current?.click()}
+      style={{
+        cursor: 'pointer',
+        width: '100%',
+        maxWidth: 440,
+        height: 260,
+        margin: '0 auto 16px auto',
+        borderRadius: 20,
+        position: 'relative',
+        overflow: 'hidden',
+        boxShadow: 'var(--shadow-md)',
+        border: '2px solid var(--line)',
+        background: 'repeating-linear-gradient(135deg, #1E3A28, #1E3A28 10px, #162B1E 10px, #162B1E 20px)',
+      }}
+    >
       {/* API/offline badge */}
-      <div className="badge-offline">
+      <div className="badge-offline" style={{ zIndex: 10 }}>
         {apiOnline ? '☁️' : '📡'}
         <span>{apiOnline ? t('serverBadge') : t('edgeBadge')}</span>
       </div>
@@ -27,7 +41,7 @@ export default function ScanFrame({ previewSrc, scanning = false, onImageChosen,
           style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
         />
       ) : (
-        <div className="leaf-icon" aria-hidden="true">🍃</div>
+        <div className="leaf-icon" aria-hidden="true" style={{ fontSize: 72 }}>🍃</div>
       )}
 
       {/* Corner decorations */}
