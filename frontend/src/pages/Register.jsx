@@ -13,7 +13,7 @@ export default function Register() {
 
   const [form, setForm] = useState({
     name: '', phone: '', password: '', confirmPassword: '',
-    district: '', village: '', state: 'Andhra Pradesh', role: 'farmer',
+    region: 'Tirupati, Andhra Pradesh', crop_type: 'Tomato', land_size_acres: 1.0,
   });
 
   const set = (key) => (e) => setForm((f) => ({ ...f, [key]: e.target.value }));
@@ -21,13 +21,27 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
     if (form.password !== form.confirmPassword) {
       setError('Passwords do not match');
       return;
     }
+
     setLoading(true);
     try {
-      await registerUser(form);
+      await registerUser({
+        name: form.name,
+        phone: form.phone,
+        password: form.password,
+        region: form.region,
+        crop_type: form.crop_type,
+        land_size_acres: parseFloat(form.land_size_acres) || 1.0,
+      });
       navigate(ROUTES.LOGIN);
     } catch (err) {
       setError(err.message || t('error'));
@@ -43,7 +57,7 @@ export default function Register() {
           <div className="mark">🌾</div>
           <div>
             <h1>AgriSphere AI</h1>
-            <p>Create your account</p>
+            <p>Create your farmer account</p>
           </div>
         </div>
 
@@ -54,22 +68,6 @@ export default function Register() {
 
           <FieldSet label={t('phone')}>
             <input type="tel" value={form.phone} onChange={set('phone')} placeholder="+91 98765 43210" required />
-          </FieldSet>
-
-          <FieldSet label={t('district')}>
-            <input type="text" value={form.district} onChange={set('district')} placeholder="Tirupati" required />
-          </FieldSet>
-
-          <FieldSet label={t('village')}>
-            <input type="text" value={form.village} onChange={set('village')} placeholder="Renigunta" />
-          </FieldSet>
-
-          <FieldSet label={t('role')}>
-            <select value={form.role} onChange={set('role')}>
-              <option value="farmer">{t('roleFarmer')}</option>
-              <option value="equipment_owner">{t('roleEquipOwner')}</option>
-              <option value="both">{t('roleBoth')}</option>
-            </select>
           </FieldSet>
 
           <FieldSet label={t('password')}>

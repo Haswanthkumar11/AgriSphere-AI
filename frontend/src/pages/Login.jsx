@@ -18,19 +18,21 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (!phone || !password) {
+      setError('Please provide phone number and password');
+      return;
+    }
+
     const result = await login(phone, password);
     if (result.success) {
       navigate(ROUTES.DASHBOARD);
     } else {
-      // Demo mode: if API unavailable, mock login to allow testing UI
-      if (result.error?.includes('Network') || result.error?.includes('network')) {
-        // Create a demo session
-        const { setStoredToken, setStoredUser } = await import('@utils/storage');
-        setStoredToken('demo-jwt-token');
-        setStoredUser({ id: 'usr_demo', name: 'Ramesh Kumar', role: 'farmer', phone: '+919876543210' });
-        window.location.href = ROUTES.DASHBOARD;
+      const msg = result.error || '';
+      if (msg.toLowerCase().includes('network') || msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('connect')) {
+        setError('Unable to connect to server. Please try again.');
       } else {
-        setError(result.error || t('error'));
+        setError(msg || 'Invalid phone or password');
       }
     }
   };

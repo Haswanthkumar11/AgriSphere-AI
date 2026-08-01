@@ -19,6 +19,25 @@ export function AuthProvider({ children }) {
     }
   }, [token, user]);
 
+  /** Refresh user profile on app start if token is present */
+  useEffect(() => {
+    if (token) {
+      getProfile()
+        .then((profile) => {
+          if (profile) {
+            setUser(profile);
+            setStoredUser(profile);
+          }
+        })
+        .catch(() => {
+          // Token expired or invalid — clear storage
+          setToken(null);
+          setUser(null);
+          clearStorage();
+        });
+    }
+  }, [token]);
+
   /** Login as farmer/user */
   const login = useCallback(async (phone, password) => {
     setIsLoading(true);
@@ -58,8 +77,10 @@ export function AuthProvider({ children }) {
     if (!token) return;
     try {
       const profile = await getProfile();
-      setUser(profile);
-      setStoredUser(profile);
+      if (profile) {
+        setUser(profile);
+        setStoredUser(profile);
+      }
     } catch {
       // Token may have expired
       logout();

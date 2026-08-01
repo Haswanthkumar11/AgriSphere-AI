@@ -2,6 +2,7 @@
 from sqlalchemy.orm import Session
 
 from ..core.config import settings
+from ..core.security import hash_password
 from ..models.farmer import Farmer
 from ..models.equipment import Equipment
 from ..repositories.disease_kb_repository import seed_disease_knowledge_base
@@ -9,20 +10,31 @@ from ..repositories.harvest_kb_repository import seed_harvest_knowledge_base
 
 
 def seed_demo_data(db: Session) -> None:
-    if db.query(Farmer).filter(Farmer.id == settings.DEMO_FARMER_ID).count() == 0:
+    demo_hash = hash_password("password123")
+
+    f1 = db.query(Farmer).filter(Farmer.id == settings.DEMO_FARMER_ID).first()
+    if not f1:
         db.add(Farmer(
             id=settings.DEMO_FARMER_ID, name="Ramesh Kumar", phone="+919876543210",
+            password_hash=demo_hash, role="farmer",
             region=settings.DEMO_REGION, crop_type="Tomato", land_size_acres=3.5,
         ))
         db.commit()
+    elif not f1.password_hash:
+        f1.password_hash = demo_hash
+        db.commit()
 
-    if db.query(Farmer).filter(Farmer.id == "usr_farmer_b").count() == 0:
+    f2 = db.query(Farmer).filter(Farmer.id == "usr_farmer_b").first()
+    if not f2:
         db.add(Farmer(
             id="usr_farmer_b", name="Suresh Kumar", phone="+919876543211",
+            password_hash=demo_hash, role="farmer",
             region="Guntur, Andhra Pradesh", crop_type="Paddy", land_size_acres=2.5,
         ))
         db.commit()
-
+    elif not f2.password_hash:
+        f2.password_hash = demo_hash
+        db.commit()
 
     if db.query(Equipment).count() == 0:
         db.add_all([

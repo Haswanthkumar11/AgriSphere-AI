@@ -11,6 +11,8 @@ class Farmer(Base):
     id = Column(String, primary_key=True, default=lambda: gen_id("usr"))
     name = Column(String, nullable=False)
     phone = Column(String, unique=True, nullable=False)
+    password_hash = Column(String, nullable=True)
+    role = Column(String, default="farmer", nullable=False)  # farmer, owner, officer, admin
     region = Column(String, default="Tirupati, Andhra Pradesh")
     crop_type = Column(String, default="Tomato")
     land_size_acres = Column(Float, default=1.0)
