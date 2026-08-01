@@ -1,12 +1,13 @@
 """
 AgriSphere AI — Crop Intelligence API Endpoints (Module 3)
-POST   /api/v1/crop/scan — Scan leaf, run 10-subsystem pipeline, create AISession
+POST   /api/v1/crop/scan — Scan leaf, run Hybrid AI Architecture pipeline, create AISession
 GET    /api/v1/crop/history — Get scan history (with crop filter)
 GET    /api/v1/crop/session/{session_id} — Get full session details
 DELETE /api/v1/crop/session/{session_id} — Soft delete session
 POST   /api/v1/crop/compare — Compare 2 sessions side-by-side
 GET    /api/v1/crop/knowledge-base — List disease knowledge base entries
 GET    /api/v1/crop/knowledge-base/{disease_code} — Get disease knowledge card
+GET    /api/v1/crop/rag-stats — Get ChromaDB vector store collection stats
 """
 from fastapi import APIRouter, Depends, UploadFile, File, Form, Query, HTTPException, status
 from sqlalchemy.orm import Session
@@ -17,6 +18,7 @@ from ..services import crop_service
 from ..repositories import crop_session_repository, disease_kb_repository
 from ..core.responses import success_response
 from ..schemas.crop import CompareRequestSchema
+from ..ai.chroma_db_engine import chroma_vector_store
 
 router = APIRouter(prefix="/api/v1/crop", tags=["Crop Intelligence"])
 
@@ -31,7 +33,7 @@ async def scan_crop(
 ):
     """
     Submits crop leaf photo for full Crop Intelligence decision support.
-    Runs preprocessor -> ModelRegistry (YOLOv8) -> ConfidenceEngine -> AdvisoryEngine -> DB persistence.
+    Runs Hybrid AI Architecture: OpenCV Preprocessor -> YOLO Crop Localization -> Gemini Vision Reasoner -> ChromaDB RAG Vector Retrieval -> Grounded Synthesizer.
     """
     image_bytes = await file.read()
     if not image_bytes:
@@ -126,3 +128,9 @@ def get_disease_card(disease_code: str, db: Session = Depends(get_db)):
         "image_icon": e.image_icon,
     }
     return success_response(data=data, message="Disease card retrieved")
+
+
+@router.get("/rag-stats", summary="Get ChromaDB vector store collection stats")
+def get_rag_stats():
+    stats = chroma_vector_store.get_stats()
+    return success_response(data=stats, message="ChromaDB RAG vector store stats retrieved")
