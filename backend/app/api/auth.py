@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 
 from ..database.session import get_db
 from ..core.responses import success_response
@@ -66,3 +67,23 @@ def list_users(db: Session = Depends(get_db)):
         for u in users
     ]
     return success_response(data=formatted, message="Registered users retrieved")
+
+
+@router.get("/admin-stats", summary="Get Real Database Admin Stats")
+def get_admin_stats(db: Session = Depends(get_db)):
+    """Queries real live database table counts for Admin Dashboard."""
+    total_farmers = db.execute(text("SELECT COUNT(*) FROM farmers WHERE role IN ('farmer', 'admin');")).scalar() or 0
+    total_owners = db.execute(text("SELECT COUNT(*) FROM farmers WHERE role = 'owner';")).scalar() or 0
+    active_bookings = db.execute(text("SELECT COUNT(*) FROM bookings WHERE status IN ('ACCEPTED', 'IN_PROGRESS');")).scalar() or 0
+    crop_scans_cnt = db.execute(text("SELECT COUNT(*) FROM ai_sessions;")).scalar() or 0
+    harvest_scans_cnt = db.execute(text("SELECT COUNT(*) FROM harvest_sessions;")).scalar() or 0
+    
+    return success_response(
+        data={
+            "totalFarmers": total_farmers,
+            "totalEquipOwners": total_owners,
+            "activeBookings": active_bookings,
+            "aiRequests": crop_scans_cnt + harvest_scans_cnt,
+        },
+        message="Admin statistics retrieved",
+    )

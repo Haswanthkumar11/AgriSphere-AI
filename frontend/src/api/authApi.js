@@ -20,3 +20,6 @@ export const changePassword = (currentPassword, newPassword) =>
 
 export const getUsers = () =>
   client.get('/api/v1/auth/users');
+
+export const getAdminStats = () =>
+  client.get('/api/v1/auth/admin-stats');
