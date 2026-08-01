@@ -60,15 +60,15 @@ class TestAuthRedesign(unittest.TestCase):
             "name": "Dr. V. Prasad",
             "phone": phone,
             "role": "officer",
-            "password": "password123",
+            "password": "CustomPassword123!",
         }
         res = client.post("/api/v1/auth/provision", json=payload)
         self.assertEqual(res.status_code, 201)
         data = res.json()["data"]
         self.assertEqual(data["role"], "officer")
 
-        # Login provisioned officer
-        res_login = client.post("/api/v1/auth/login", json={"phone": phone, "password": "password123"})
+        # Login provisioned officer with explicit password
+        res_login = client.post("/api/v1/auth/login", json={"phone": phone, "password": "CustomPassword123!"})
         self.assertEqual(res_login.status_code, 200)
         self.assertEqual(res_login.json()["data"]["user"]["role"], "officer")
 
