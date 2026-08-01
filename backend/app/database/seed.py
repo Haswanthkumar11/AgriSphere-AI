@@ -9,12 +9,20 @@ from ..repositories.harvest_kb_repository import seed_harvest_knowledge_base
 
 
 def seed_demo_data(db: Session) -> None:
-    if db.query(Farmer).count() == 0:
+    if db.query(Farmer).filter(Farmer.id == settings.DEMO_FARMER_ID).count() == 0:
         db.add(Farmer(
             id=settings.DEMO_FARMER_ID, name="Ramesh Kumar", phone="+919876543210",
             region=settings.DEMO_REGION, crop_type="Tomato", land_size_acres=3.5,
         ))
         db.commit()
+
+    if db.query(Farmer).filter(Farmer.id == "usr_farmer_b").count() == 0:
+        db.add(Farmer(
+            id="usr_farmer_b", name="Suresh Kumar", phone="+919876543211",
+            region="Guntur, Andhra Pradesh", crop_type="Paddy", land_size_acres=2.5,
+        ))
+        db.commit()
+
 
     if db.query(Equipment).count() == 0:
         db.add_all([
