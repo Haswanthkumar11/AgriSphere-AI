@@ -5,7 +5,8 @@ import unittest
 from datetime import date, timedelta
 from fastapi.testclient import TestClient
 from app.main import app
-from app.database.session import init_db
+from app.database.session import SessionLocal, init_db
+from app.models.farmer import Farmer
 
 client = TestClient(app)
 
@@ -14,6 +15,14 @@ class TestResourceModule(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         init_db()
+        db = SessionLocal()
+        # Ensure test farmers exist for FK constraints
+        if not db.query(Farmer).filter(Farmer.id == "usr_demo").first():
+            db.add(Farmer(id="usr_demo", name="Test Owner", phone="+919999988881", role="farmer"))
+        if not db.query(Farmer).filter(Farmer.id == "usr_farmer_b").first():
+            db.add(Farmer(id="usr_farmer_b", name="Test Requester", phone="+919999988882", role="farmer"))
+        db.commit()
+        db.close()
 
     def test_01_create_equipment(self):
         payload = {

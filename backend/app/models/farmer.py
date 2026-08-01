@@ -12,7 +12,7 @@ class Farmer(Base):
     name = Column(String, nullable=False)
     phone = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=True)
-    role = Column(String, default="farmer", nullable=False)  # farmer, owner, officer, admin
+    role = Column(String, default="farmer", nullable=False) # Retained for backward compatibility
     region = Column(String, default="Tirupati, Andhra Pradesh")
     crop_type = Column(String, default="Tomato")
     land_size_acres = Column(Float, default=1.0)

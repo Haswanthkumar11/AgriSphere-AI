@@ -4,6 +4,7 @@ export const ROUTES = {
   LANGUAGE_SELECT: '/language-select',
   LOGIN: '/login',
   ADMIN_LOGIN: '/admin/login',
+  OFFICER_LOGIN: '/officer/login',
   REGISTER: '/register',
 
   // Farmer routes
@@ -26,6 +27,9 @@ export const ROUTES = {
   HARVEST_HISTORY: '/harvest/history',
   HARVEST_COMPARE: '/harvest/compare',
   STORAGE_ADVICE: '/harvest/storage',
+
+  // Officer routes
+  OFFICER_DASHBOARD: '/officer/dashboard',
 
   // Admin routes
   ADMIN: '/admin',

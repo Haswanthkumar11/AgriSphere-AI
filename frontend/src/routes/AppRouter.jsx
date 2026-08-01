@@ -33,6 +33,7 @@ function lazyRetry(componentImport) {
 const LanguageSelect = lazyRetry(() => import('@pages/LanguageSelect'));
 const Login          = lazyRetry(() => import('@pages/Login'));
 const AdminLogin     = lazyRetry(() => import('@pages/AdminLogin'));
+const OfficerLogin   = lazyRetry(() => import('@pages/officer/OfficerLogin'));
 const Register       = lazyRetry(() => import('@pages/Register'));
 
 const Dashboard      = lazyRetry(() => import('@pages/farmer/Dashboard'));
@@ -55,6 +56,10 @@ const HarvestHistoryPage    = lazyRetry(() => import('@pages/farmer/HarvestHisto
 const HarvestComparisonPage = lazyRetry(() => import('@pages/farmer/HarvestComparisonPage'));
 const StorageAdvicePage     = lazyRetry(() => import('@pages/farmer/StorageAdvicePage'));
 
+// Officer pages
+const OfficerDashboard = lazyRetry(() => import('@pages/officer/OfficerDashboard'));
+
+// Admin pages
 const AdminDashboard = lazyRetry(() => import('@pages/admin/AdminDashboard'));
 const UsersPage      = lazyRetry(() => import('@pages/admin/UsersPage'));
 
@@ -83,6 +88,7 @@ export default function AppRouter() {
             <Route path={ROUTES.LANGUAGE_SELECT} element={<GuestRoute><LanguageSelect /></GuestRoute>} />
             <Route path={ROUTES.LOGIN}            element={<GuestRoute><Login /></GuestRoute>} />
             <Route path={ROUTES.ADMIN_LOGIN}      element={<GuestRoute><AdminLogin /></GuestRoute>} />
+            <Route path={ROUTES.OFFICER_LOGIN}    element={<GuestRoute><OfficerLogin /></GuestRoute>} />
             <Route path={ROUTES.REGISTER}         element={<GuestRoute><Register /></GuestRoute>} />
           </Route>
 
@@ -104,6 +110,9 @@ export default function AppRouter() {
             <Route path={ROUTES.HARVEST_COMPARE} element={<HarvestComparisonPage />} />
             <Route path={ROUTES.STORAGE_ADVICE}  element={<StorageAdvicePage />} />
           </Route>
+
+          {/* Extension Officer Portal */}
+          <Route path={ROUTES.OFFICER_DASHBOARD} element={<OfficerDashboard />} />
 
           {/* Admin routes (protected + role-gated) */}
           <Route element={<AdminRoute><AdminLayout /></AdminRoute>}>
