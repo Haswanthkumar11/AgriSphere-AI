@@ -1,86 +1,131 @@
-/* AgriSphere AI — Button Styles */
+/* AgriSphere AI — Premium Button Design System */
 
+.btn-primary, .btn-secondary, .btn-danger, .btn-success, .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: var(--radius-btn);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast);
+  border: 1px solid transparent;
+  user-select: none;
+  outline: none;
+}
+
+/* Primary Button */
 .btn-primary {
-  width: 100%;
-  padding: 16px;
-  border: none;
-  border-radius: 16px;
-  background: var(--soil);
-  color: var(--paper);
-  font-weight: 700;
-  font-size: 15px;
-  box-shadow: var(--shadow);
-  transition: background var(--transition);
-  cursor: pointer;
+  background: var(--gradient-primary);
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 14px rgba(44, 74, 52, 0.25);
 }
 
-.btn-primary:hover   { background: var(--soil-dark); }
-.btn-primary:active  { background: var(--soil-dark); }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-
-.btn-primary.gold {
-  background: var(--wheat);
-  color: var(--soil-dark);
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(44, 74, 52, 0.35);
+  background: linear-gradient(135deg, #355A3F 0%, #203827 100%);
+  color: #ffffff;
 }
 
-.btn-primary.gold:hover { background: var(--wheat-deep); }
+.btn-primary:focus-visible {
+  box-shadow: 0 0 0 3.5px rgba(44, 74, 52, 0.35);
+}
 
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Secondary Button */
 .btn-secondary {
-  width: 100%;
-  padding: 14px;
-  border-radius: 16px;
-  background: #fff;
-  border: 1.5px solid var(--line);
-  color: var(--soil-dark);
-  font-weight: 700;
-  font-size: 14px;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: background var(--transition);
-}
-
-.btn-secondary:hover { background: var(--paper-dim); }
-
-.book-btn {
-  align-self: center;
-  background: var(--soil);
-  color: #fff;
-  border: none;
-  padding: 9px 14px;
-  border-radius: 10px;
-  font-size: 12px;
-  font-weight: 700;
-  flex: none;
-  cursor: pointer;
-  transition: background var(--transition);
-}
-
-.book-btn:hover    { background: var(--soil-dark); }
-.book-btn:disabled { background: var(--good); cursor: default; }
-
-.play-btn {
-  margin-left: auto;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: var(--wheat);
-  border: none;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px;
-  color: var(--soil-dark);
-  flex: none;
-  cursor: pointer;
-}
-
-.back-btn {
-  width: 38px; height: 38px;
-  border-radius: 10px;
+  background: #ffffff;
+  color: var(--soil-dark) !important;
   border: 1px solid var(--line);
-  background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px;
-  color: var(--soil-dark);
-  cursor: pointer;
-  transition: background var(--transition);
+  box-shadow: var(--shadow-subtle);
 }
 
-.back-btn:hover { background: var(--paper-dim); }
+.btn-secondary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: var(--paper-dim);
+  border-color: rgba(44, 74, 52, 0.25);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:focus-visible {
+  box-shadow: 0 0 0 3.5px rgba(44, 74, 52, 0.18);
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+/* Outline Button */
+.btn-outline {
+  background: transparent;
+  color: var(--soil-dark) !important;
+  border: 1.5px solid var(--soil);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--soil);
+  color: #ffffff !important;
+  transform: translateY(-2px);
+}
+
+/* Success Button */
+.btn-success {
+  background: var(--gradient-emerald);
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.28);
+}
+
+.btn-success:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.38);
+}
+
+/* Danger Button */
+.btn-danger {
+  background: var(--gradient-terracotta);
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(189, 91, 52, 0.28);
+}
+
+.btn-danger:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(189, 91, 52, 0.38);
+}
+
+/* Disabled State */
+.btn-primary:disabled, .btn-secondary:disabled, .btn-danger:disabled, .btn-success:disabled, .btn-outline:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Button Size Modifiers */
+.btn-sm {
+  min-height: 38px;
+  padding: 8px 16px;
+  font-size: 13px;
+  border-radius: var(--radius-md);
+}
+
+.btn-lg {
+  min-height: 54px;
+  padding: 14px 32px;
+  font-size: 16px;
+  border-radius: var(--radius-btn);
+}
+
+.btn-full {
+  width: 100%;
+}

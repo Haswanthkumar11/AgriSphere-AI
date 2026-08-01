@@ -1,80 +1,110 @@
-/* AgriSphere AI — Layout Styles */
+/* AgriSphere AI — Layout System */
 
-.app {
-  max-width: 480px;
-  margin: 0 auto;
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at 12% 8%, rgba(217, 164, 65, 0.10), transparent 40%),
-    var(--paper);
-  position: relative;
-  padding-bottom: 92px;
-  border-left: 1px solid var(--line);
-  border-right: 1px solid var(--line);
-}
-
-.section { padding: 14px 20px; }
-
-.greet-row {
-  padding: 16px 20px 4px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.greet-row .hello { font-size: 13px; color: var(--ink-soft); }
-.greet-row .name  { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--soil-dark); }
-
-.back-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-}
-
-.screen-title { font-size: 19px; font-weight: 700; }
-.screen-sub   { font-size: 12.5px; color: var(--ink-soft); margin-top: 2px; }
-
-.lang-select-page {
-  min-height: 100vh;
-  background: linear-gradient(160deg, var(--soil) 0%, #234030 100%);
+.app-wrapper {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  text-align: center;
+  min-height: 100vh;
+  background-color: var(--paper);
 }
 
-.lang-select-page h1 {
-  color: var(--paper);
-  font-size: 28px;
+.app-container {
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--page-padding-x);
+  padding-right: var(--page-padding-x);
+  padding-top: var(--page-padding-y);
+  padding-bottom: calc(var(--page-padding-y) + 32px);
+  flex: 1;
+}
+
+/* Page Section Spacing (32px standard section gap) */
+.page-section {
+  margin-bottom: 32px;
+}
+
+.page-header-block {
+  margin-bottom: 24px;
+}
+
+.page-header-block .page-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--soil-dark);
+  margin-bottom: 4px;
+}
+
+.page-header-block .page-sub {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .page-header-block .page-title {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .page-header-block .page-title {
+    font-size: 36px;
+  }
+}
+
+/* Auth Page Centering Layout */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: radial-gradient(circle at 50% 20%, #F5ECDC 0%, #FBF6EC 100%);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  background: #ffffff;
+  border: 1px solid rgba(44, 74, 52, 0.10);
+  border-radius: var(--radius-modal);
+  padding: 32px 28px;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-bottom: 8px;
 }
 
-.lang-select-page p {
-  color: rgba(251, 246, 236, 0.75);
-  font-size: 14px;
-  margin-bottom: 40px;
-}
-
-.admin-layout {
+.auth-logo .mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: var(--gradient-primary);
+  color: #fff;
   display: flex;
-  min-height: 100vh;
-  background: #f0f2f5;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  box-shadow: var(--shadow-sm);
 }
 
-.admin-sidebar {
-  width: 240px;
-  background: var(--soil-dark);
-  color: var(--paper);
-  padding: 24px 0;
-  flex: none;
-  position: relative;
+.auth-logo h1 {
+  font-size: 22px;
+  margin: 0;
+  line-height: 1.2;
 }
 
-.admin-main {
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
+.auth-logo p {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin: 0;
 }

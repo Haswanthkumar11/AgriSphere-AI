@@ -17,21 +17,78 @@
   --warn: var(--theme-warning);
   --bad: var(--theme-error);
 
-  /* Spacing & Geometry */
+  /* Geometry & Border Radius (Cards: 18px, Buttons: 14px, Inputs: 12px, Modals: 18px) */
   --radius: 18px;
   --radius-sm: 10px;
   --radius-md: 12px;
+  --radius-btn: 14px;
+  --radius-card: 18px;
   --radius-lg: 22px;
+  --radius-modal: 20px;
+
+  /* 8px Spacing System Scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 36px;
+  --space-10: 48px;
+
+  /* Page Padding Responsive Defaults */
+  --page-padding-x: 16px;
+  --page-padding-y: 20px;
 
   /* Shadows & Elevation */
-  --shadow: 0 6px 20px rgba(43, 32, 10, 0.10);
-  --shadow-sm: 0 2px 8px rgba(43, 32, 10, 0.08);
-  --shadow-lg: 0 12px 40px rgba(43, 32, 10, 0.15);
+  --shadow-subtle: 0 2px 8px rgba(44, 74, 52, 0.04);
+  --shadow: 0 8px 30px rgba(44, 74, 52, 0.07), 0 2px 6px rgba(0, 0, 0, 0.02);
+  --shadow-sm: 0 4px 12px rgba(44, 74, 52, 0.06);
+  --shadow-md: 0 10px 28px rgba(44, 74, 52, 0.10);
+  --shadow-lg: 0 16px 44px rgba(44, 74, 52, 0.14);
+  --shadow-hover: 0 14px 36px rgba(44, 74, 52, 0.12), 0 4px 12px rgba(0, 0, 0, 0.03);
 
   /* Typography */
-  --font-body: 'Work Sans', system-ui, sans-serif;
+  --font-body: 'Work Sans', 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Fraunces', Georgia, serif;
 
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, #2C4A34 0%, #1B2F20 100%);
+  --gradient-emerald: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  --gradient-wheat: linear-gradient(135deg, #D9A441 0%, #B9822A 100%);
+  --gradient-terracotta: linear-gradient(135deg, #BD5B34 0%, #9C4320 100%);
+  --gradient-card: linear-gradient(180deg, #FFFFFF 0%, #FDFBF7 100%);
+  --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.85) 0%, rgba(251, 246, 236, 0.75) 100%);
+
   /* Transitions */
-  --transition: 0.15s ease;
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 576px) {
+  :root {
+    --page-padding-x: 20px;
+    --page-padding-y: 24px;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --page-padding-x: 28px;
+    --page-padding-y: 32px;
+  }
+}
+@media (min-width: 992px) {
+  :root {
+    --page-padding-x: 36px;
+    --page-padding-y: 40px;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    --page-padding-x: 48px;
+    --page-padding-y: 44px;
+  }
 }

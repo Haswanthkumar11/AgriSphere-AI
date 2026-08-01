@@ -1,73 +1,82 @@
-/* AgriSphere AI — Form Styles */
+/* AgriSphere AI — Form Controls & Inputs Design System */
 
-.fieldset { margin-bottom: 16px; }
-
-.fieldset label {
-  display: block;
-  font-size: 12.5px;
-  font-weight: 700;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-
-.fieldset select,
-.fieldset input {
-  width: 100%;
-  padding: 13px 14px;
-  border-radius: 12px;
-  border: 1.5px solid var(--line);
-  font-size: 14px;
-  background: #fff;
-  font-family: inherit;
-  color: var(--ink);
-  transition: border-color var(--transition);
-}
-
-.fieldset select:focus,
-.fieldset input:focus {
-  outline: none;
-  border-color: var(--soil);
-}
-
-.auth-page {
-  min-height: 100vh;
-  background: var(--paper);
+.form-group, .fieldset-block {
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
+  gap: 6px;
 }
 
-.auth-card {
-  width: 100%;
-  max-width: 420px;
-  background: #fff;
-  border-radius: var(--radius-lg);
-  padding: 32px 28px;
-  box-shadow: var(--shadow-lg);
-  border: 1px solid var(--line);
-}
-
-.auth-logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 28px;
-}
-
-.auth-logo .mark {
-  width: 48px; height: 48px;
-  border-radius: 14px;
-  background: var(--soil);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 24px;
-}
-
-.auth-logo h1 {
-  font-size: 22px;
-  font-weight: 700;
+label, .fieldset-label {
+  font-size: 13.5px;
+  font-weight: 600;
   color: var(--soil-dark);
+  margin-bottom: 4px;
 }
 
-.auth-logo p { font-size: 12px; color: var(--ink-soft); margin-top: 2px; }
+input[type="text"],
+input[type="number"],
+input[type="tel"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea,
+.form-control,
+.form-select {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background-color: #ffffff;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--theme-leaf);
+  box-shadow: 0 0 0 3.5px rgba(62, 124, 74, 0.18);
+  background-color: #ffffff;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #A0A499;
+}
+
+/* Invalid State */
+input.is-invalid, select.is-invalid, textarea.is-invalid {
+  border-color: var(--bad);
+  box-shadow: 0 0 0 3.5px rgba(181, 64, 42, 0.18);
+}
+
+/* File Upload Zone */
+.upload-zone {
+  border: 2px dashed var(--line);
+  border-radius: var(--radius-card);
+  padding: 32px 24px;
+  text-align: center;
+  background: var(--paper-dim);
+  transition: border-color var(--transition), background-color var(--transition);
+  cursor: pointer;
+}
+
+.upload-zone:hover {
+  border-color: var(--theme-leaf);
+  background: #ffffff;
+}

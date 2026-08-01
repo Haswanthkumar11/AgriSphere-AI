@@ -1,71 +1,93 @@
-/* AgriSphere AI — Utilities */
+/* AgriSphere AI — Tables, Utilities & Badge Design System */
 
-.eyebrow {
-  font-size: 10.5px;
-  text-transform: uppercase;
-  letter-spacing: 1.2px;
-  color: var(--wheat-deep);
-  font-weight: 700;
+/* Modern Bootstrap Table Container */
+.table-responsive-container {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(44, 74, 52, 0.09);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
-.status-pill {
-  display: flex;
+.table-modern {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-bottom: 0;
+}
+
+.table-modern th {
+  background: var(--paper-dim);
+  color: var(--soil-dark);
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+
+.table-modern td {
+  padding: 16px 18px;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(44, 74, 52, 0.05);
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.table-modern tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.table-modern tbody tr:hover {
+  background-color: var(--paper);
+}
+
+/* Status Badges */
+.badge-pill {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
   font-weight: 700;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: var(--paper-dim);
-  border: 1px solid var(--line);
-  color: var(--ink-soft);
+  line-height: 1.3;
 }
 
-.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--good); }
-.status-pill.offline .status-dot { background: var(--warn); }
+.badge-pill.good { background: #E6F0E3; color: var(--theme-leaf); }
+.badge-pill.warn { background: #FFF3D6; color: var(--wheat-deep); }
+.badge-pill.bad  { background: #FBEAE5; color: var(--terracotta); }
+.badge-pill.info { background: #DFEEF1; color: var(--sky); }
 
-.trend.up   { color: var(--good); background: #E6F3E5; }
-.trend.down { color: var(--bad);  background: #FBEAE5; }
-
-.badge-offline {
-  position: absolute;
-  top: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.45);
-  color: #fff;
-  font-size: 10.5px;
-  font-weight: 700;
-  padding: 5px 10px;
-  border-radius: 999px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
+/* Skeleton Loader Animation */
+.skeleton-box {
+  background: linear-gradient(90deg, var(--paper-dim) 25%, #EFE5D3 50%, var(--paper-dim) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite ease-in-out;
+  border-radius: var(--radius-sm);
 }
 
-.metric-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px dashed var(--line);
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
 
-.metric-row:last-child { border-bottom: none; }
-.metric-row .label { font-size: 13px; color: var(--ink-soft); }
-.metric-row .value { font-weight: 700; font-size: 14.5px; color: var(--soil-dark); }
-
-.price-highlight {
-  text-align: center;
-  padding: 20px;
-  border-radius: 18px;
-  background: var(--wheat);
-  margin-top: 14px;
+/* Grid Layout Systems for Dashboard & Market Pages */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
 }
 
-.price-highlight .lbl { font-size: 11.5px; font-weight: 700; color: #5c4310; text-transform: uppercase; letter-spacing: 1px; }
-.price-highlight .amt { font-family: var(--font-display); font-size: 32px; font-weight: 800; color: var(--soil-dark); margin-top: 4px; }
-.price-highlight .unit { font-size: 12px; color: #5c4310; }
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+@media (min-width: 576px) {
+  .dashboard-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 992px) {
+  .dashboard-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1200px) {
+  .dashboard-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
+}

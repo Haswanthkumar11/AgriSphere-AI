@@ -1,7 +1,4 @@
-/* =============================================================
-   AgriSphere AI — Base Reset & Typography
-   Mirrors the existing <style> reset from the prototype.
-   ============================================================= */
+/* AgriSphere AI — Global Base Styles & Responsive Typography */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -10,57 +7,83 @@
 html, body {
   margin: 0;
   padding: 0;
-}
-
-body {
-  background: var(--paper);
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 18px;
-  line-height: 1.5;
 }
 
-h1, h2, h3, h4, h5, h6 {
+/* Typography Hierarchy */
+h1, .h1 {
   font-family: var(--font-display);
-  margin: 0;
+  font-size: 26px;
+  font-weight: 800;
   color: var(--soil-dark);
+  line-height: 1.25;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--soil-dark);
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+}
+
+h3, .h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--soil-dark);
+  line-height: 1.35;
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+h4, .h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--soil-dark);
+  margin-top: 0;
+  margin-bottom: 0.3rem;
 }
 
 p {
-  margin: 0;
-}
-
-button {
-  font-family: inherit;
-  cursor: pointer;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
 }
 
 a {
-  color: inherit;
+  color: var(--theme-leaf);
   text-decoration: none;
+  transition: color var(--transition-fast);
+}
+a:hover {
+  color: var(--soil-dark);
 }
 
-img {
-  max-width: 100%;
-  display: block;
+/* Responsive Headings Scale */
+@media (min-width: 768px) {
+  h1, .h1 { font-size: 30px; }
+  h2, .h2 { font-size: 24px; }
+  h3, .h3 { font-size: 20px; }
 }
 
-input, select, textarea {
-  font-family: inherit;
+@media (min-width: 1200px) {
+  h1, .h1 { font-size: 36px; }
+  h2, .h2 { font-size: 26px; }
 }
 
-/* Remove scrollbar for horizontal scroll areas */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Global hidden scrollbar (mirrors original) */
-::-webkit-scrollbar {
-  display: none;
+/* Selection */
+::selection {
+  background: var(--wheat);
+  color: var(--soil-dark);
 }
