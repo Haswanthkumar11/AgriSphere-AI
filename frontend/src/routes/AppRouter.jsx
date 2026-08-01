@@ -10,39 +10,58 @@ import GuestRoute     from './GuestRoute';
 import AdminRoute     from './AdminRoute';
 import Loader         from '@components/ui/Loader';
 
-// ── Lazy-loaded pages ──
-const LanguageSelect = lazy(() => import('@pages/LanguageSelect'));
-const Login          = lazy(() => import('@pages/Login'));
-const AdminLogin     = lazy(() => import('@pages/AdminLogin'));
-const Register       = lazy(() => import('@pages/Register'));
+// Helper for lazy loading pages with automatic retry on Vercel deployment chunk update
+function lazyRetry(componentImport) {
+  return lazy(async () => {
+    const pageHasBeenReloaded = sessionStorage.getItem('chunk_reload_attempts');
+    try {
+      const component = await componentImport();
+      sessionStorage.removeItem('chunk_reload_attempts');
+      return component;
+    } catch (error) {
+      if (!pageHasBeenReloaded) {
+        sessionStorage.setItem('chunk_reload_attempts', '1');
+        window.location.reload();
+        return new Promise(() => {}); // prevent throw while reloading
+      }
+      throw error;
+    }
+  });
+}
 
-const Dashboard      = lazy(() => import('@pages/farmer/Dashboard'));
-const ScanPage       = lazy(() => import('@pages/farmer/ScanPage'));
-const WeatherPage    = lazy(() => import('@pages/farmer/WeatherPage'));
-const GrainPage      = lazy(() => import('@pages/farmer/GrainPage'));
-const EquipmentPage  = lazy(() => import('@pages/farmer/EquipmentPage'));
-const BookingsPage   = lazy(() => import('@pages/farmer/BookingsPage'));
-const YieldPage      = lazy(() => import('@pages/farmer/YieldPage'));
-const MarketPage     = lazy(() => import('@pages/farmer/MarketPage'));
-const ProfilePage    = lazy(() => import('@pages/farmer/ProfilePage'));
+// ── Lazy-loaded pages ──
+const LanguageSelect = lazyRetry(() => import('@pages/LanguageSelect'));
+const Login          = lazyRetry(() => import('@pages/Login'));
+const AdminLogin     = lazyRetry(() => import('@pages/AdminLogin'));
+const Register       = lazyRetry(() => import('@pages/Register'));
+
+const Dashboard      = lazyRetry(() => import('@pages/farmer/Dashboard'));
+const ScanPage       = lazyRetry(() => import('@pages/farmer/ScanPage'));
+const WeatherPage    = lazyRetry(() => import('@pages/farmer/WeatherPage'));
+const GrainPage      = lazyRetry(() => import('@pages/farmer/GrainPage'));
+const EquipmentPage  = lazyRetry(() => import('@pages/farmer/EquipmentPage'));
+const BookingsPage   = lazyRetry(() => import('@pages/farmer/BookingsPage'));
+const YieldPage      = lazyRetry(() => import('@pages/farmer/YieldPage'));
+const MarketPage     = lazyRetry(() => import('@pages/farmer/MarketPage'));
+const ProfilePage    = lazyRetry(() => import('@pages/farmer/ProfilePage'));
 
 // Module 3 pages
-const CropHistoryPage    = lazy(() => import('@pages/farmer/CropHistoryPage'));
-const ScanComparisonPage = lazy(() => import('@pages/farmer/ScanComparisonPage'));
-const DiseaseKBPage      = lazy(() => import('@pages/farmer/DiseaseKBPage'));
+const CropHistoryPage    = lazyRetry(() => import('@pages/farmer/CropHistoryPage'));
+const ScanComparisonPage = lazyRetry(() => import('@pages/farmer/ScanComparisonPage'));
+const DiseaseKBPage      = lazyRetry(() => import('@pages/farmer/DiseaseKBPage'));
 
 // Module 4 pages
-const HarvestHistoryPage    = lazy(() => import('@pages/farmer/HarvestHistoryPage'));
-const HarvestComparisonPage = lazy(() => import('@pages/farmer/HarvestComparisonPage'));
-const StorageAdvicePage     = lazy(() => import('@pages/farmer/StorageAdvicePage'));
+const HarvestHistoryPage    = lazyRetry(() => import('@pages/farmer/HarvestHistoryPage'));
+const HarvestComparisonPage = lazyRetry(() => import('@pages/farmer/HarvestComparisonPage'));
+const StorageAdvicePage     = lazyRetry(() => import('@pages/farmer/StorageAdvicePage'));
 
-const AdminDashboard = lazy(() => import('@pages/admin/AdminDashboard'));
-const UsersPage      = lazy(() => import('@pages/admin/UsersPage'));
+const AdminDashboard = lazyRetry(() => import('@pages/admin/AdminDashboard'));
+const UsersPage      = lazyRetry(() => import('@pages/admin/UsersPage'));
 
-const Unauthorized401 = lazy(() => import('@pages/error/Unauthorized401'));
-const Forbidden403    = lazy(() => import('@pages/error/Forbidden403'));
-const NotFound404     = lazy(() => import('@pages/error/NotFound404'));
-const ServerError500  = lazy(() => import('@pages/error/ServerError500'));
+const Unauthorized401 = lazyRetry(() => import('@pages/error/Unauthorized401'));
+const Forbidden403    = lazyRetry(() => import('@pages/error/Forbidden403'));
+const NotFound404     = lazyRetry(() => import('@pages/error/NotFound404'));
+const ServerError500  = lazyRetry(() => import('@pages/error/ServerError500'));
 
 const PageLoader = () => (
   <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
