@@ -16,4 +16,4 @@ services:
       - key: JWT_SECRET
         generateValue: true
       - key: CORS_ORIGINS
-        value: "*"
+        value: "https://agri-sphere-5dfze24ke-haswanth1.vercel.app,http://localhost:5173"
