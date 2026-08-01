@@ -21,9 +21,12 @@ export default function BookingsPage() {
       getOwnerDashboard(),
     ])
       .then(([resFarmer, resOwner, resDash]) => {
-        setFarmerBookings(resFarmer.data || []);
-        setOwnerRequests(resOwner.data || []);
-        setOwnerMetrics(resDash.data?.operational_metrics || null);
+        const farmerData = resFarmer?.data || resFarmer;
+        const ownerData = resOwner?.data || resOwner;
+        const dashData = resDash?.data || resDash;
+        setFarmerBookings(Array.isArray(farmerData) ? farmerData : []);
+        setOwnerRequests(Array.isArray(ownerData) ? ownerData : []);
+        setOwnerMetrics(dashData?.operational_metrics || null);
       })
       .catch(() => {})
       .finally(() => setLoading(false));

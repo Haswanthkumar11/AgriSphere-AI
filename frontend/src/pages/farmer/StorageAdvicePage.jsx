@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import PageHeader from '@components/layout/PageHeader';
-import StorageAdvisorCard from '@components/farmer/StorageAdvisorCard';
 import Skeleton from '@components/ui/Skeleton';
 import { getHarvestKnowledgeBase } from '@api/harvestApi';
 
@@ -10,7 +9,10 @@ export default function StorageAdvicePage() {
 
   useEffect(() => {
     getHarvestKnowledgeBase()
-      .then((res) => setKb(res.data || []))
+      .then((res) => {
+        const data = res?.data || res;
+        setKb(Array.isArray(data) ? data : []);
+      })
       .catch(() => setKb([]))
       .finally(() => setLoading(false));
   }, []);
@@ -36,7 +38,7 @@ export default function StorageAdvicePage() {
 
           <div style={{ fontSize: 12 }}>
             <strong>Storage Best Practices:</strong>
-            {item.storage_best_practices.map((p, i) => (
+            {Array.isArray(item.storage_best_practices) && item.storage_best_practices.map((p, i) => (
               <div key={i}>• {p}</div>
             ))}
           </div>

@@ -16,7 +16,10 @@ export default function HarvestComparisonPage() {
   useEffect(() => {
     if (id1 && id2) {
       compareHarvests(id1, id2)
-        .then((res) => setComparison(res.data))
+        .then((res) => {
+          const data = res?.data || res;
+          setComparison(data);
+        })
         .catch((err) => setError(err?.response?.data?.detail || 'Failed to compare harvest sessions.'))
         .finally(() => setLoading(false));
     } else {

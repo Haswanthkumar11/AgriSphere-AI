@@ -12,7 +12,10 @@ export default function HarvestHistoryPage() {
 
   useEffect(() => {
     getHarvestHistory()
-      .then((res) => setHistory(res.data || []))
+      .then((res) => {
+        const data = res?.data || res;
+        setHistory(Array.isArray(data) ? data : []);
+      })
       .catch(() => setHistory([]))
       .finally(() => setLoading(false));
   }, []);

@@ -36,7 +36,9 @@ export default function GrainPage() {
     setError('');
     try {
       const res = await analyzeHarvestGrain(file, cropType);
-      setResult(res.data);
+      // Defensive payload unwrapping
+      const payload = res?.data || res;
+      setResult(payload);
     } catch (err) {
       setError(err?.response?.data?.detail || err.message || 'Grain analysis failed.');
     } finally {
@@ -88,7 +90,7 @@ export default function GrainPage() {
       )}
 
       {/* Results Workflow */}
-      {result && !loading && (
+      {result && result.quality && !loading && (
         <>
           {/* Step 2: Quality Score */}
           <QualityScoreCard

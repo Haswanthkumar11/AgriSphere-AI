@@ -64,11 +64,17 @@ export default function Dashboard() {
     window.addEventListener('offline', off);
 
     getFarmerBookings()
-      .then((res) => setBookingsCount(res.data?.length || 0))
+      .then((res) => {
+        const data = res?.data || res;
+        setBookingsCount(Array.isArray(data) ? data.length : 0);
+      })
       .catch(() => {});
 
     getNotifications()
-      .then((res) => setUnreadNotifs(res.data?.unread_count || 0))
+      .then((res) => {
+        const data = res?.data || res;
+        setUnreadNotifs(data?.unread_count || 0);
+      })
       .catch(() => {});
 
     return () => {

@@ -11,8 +11,9 @@ export default function NotificationBell() {
   const fetchNotifs = () => {
     getNotifications()
       .then((res) => {
-        setUnreadCount(res.data.unread_count || 0);
-        setNotifications(res.data.notifications || []);
+        const data = res?.data || res;
+        setUnreadCount(data?.unread_count || 0);
+        setNotifications(data?.notifications || []);
       })
       .catch(() => {});
   };

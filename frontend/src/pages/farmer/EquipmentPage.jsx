@@ -3,7 +3,7 @@ import PageHeader from '@components/layout/PageHeader';
 import Skeleton from '@components/ui/Skeleton';
 import BookingRequestModal from '@components/farmer/BookingRequestModal';
 import BookingSuccessCard from '@components/farmer/BookingSuccessCard';
-import { listEquipment, createEquipment, toggleEquipmentAvailability } from '@api/resourceApi';
+import { listEquipment, createEquipment } from '@api/resourceApi';
 
 export default function EquipmentPage() {
   const [equipmentList, setEquipmentList] = useState([]);
@@ -24,7 +24,10 @@ export default function EquipmentPage() {
   const fetchEquipment = () => {
     setLoading(true);
     listEquipment({ category: selectedCategory, sort_by: sortBy })
-      .then((res) => setEquipmentList(res.data || []))
+      .then((res) => {
+        const data = res?.data || res;
+        setEquipmentList(Array.isArray(data) ? data : []);
+      })
       .catch(() => setEquipmentList([]))
       .finally(() => setLoading(false));
   };
