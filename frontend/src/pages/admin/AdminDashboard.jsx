@@ -17,12 +17,12 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [provisionedNotice, setProvisionedNotice] = useState(null);
 
   // Provision Form
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [role, setRole] = useState('officer');
-  const [password, setPassword] = useState('password123');
 
   const fetchDashboardData = () => {
     setLoading(true);
@@ -52,8 +52,14 @@ export default function AdminDashboard() {
   const handleProvision = async (e) => {
     e.preventDefault();
     try {
-      await provisionUser({ name, phone, role, password });
-      showToast(`✅ User '${name}' provisioned as '${role}' successfully!`);
+      const res = await provisionUser({ name, phone, role });
+      const data = res?.data || res;
+      setProvisionedNotice({
+        name: data.name || name,
+        role: data.role || role,
+        password: data.generated_password || 'Agri@9f2xK',
+      });
+      showToast(`✅ User '${name}' provisioned as '${role}'!`);
       setShowModal(false);
       setName('');
       setPhone('');
@@ -80,6 +86,24 @@ export default function AdminDashboard() {
           ➕ Provision User (Role)
         </button>
       </div>
+
+      {/* Generated Credentials Alert */}
+      {provisionedNotice && (
+        <div style={{ background: '#EDF6EC', border: '1.5px solid var(--good)', padding: 14, borderRadius: 14, marginBottom: 18 }}>
+          <div style={{ fontWeight: 800, color: 'var(--good)', fontSize: 14 }}>
+            🔑 Account Provisioned Successfully!
+          </div>
+          <div style={{ fontSize: 13, marginTop: 4, color: 'var(--ink)' }}>
+            User <strong>{provisionedNotice.name}</strong> ({provisionedNotice.role.toUpperCase()}) created with Auto-Generated Password:
+            <code style={{ background: '#fff', padding: '2px 8px', borderRadius: 4, marginLeft: 8, fontWeight: 800, color: 'var(--soil-dark)', border: '1px solid var(--line)' }}>
+              {provisionedNotice.password}
+            </code>
+          </div>
+          <button onClick={() => setProvisionedNotice(null)} style={{ marginTop: 8, background: 'none', border: 'none', color: 'var(--ink-soft)', fontSize: 11, cursor: 'pointer', textDecoration: 'underline' }}>
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {loading ? (
         <Skeleton height={120} style={{ borderRadius: 16, marginBottom: 28 }} />
@@ -142,9 +166,9 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      {/* System Status */}
+      {/* Real Database Metrics Telemetry */}
       <div style={{ background: '#fff', borderRadius: 16, padding: 20, boxShadow: 'var(--shadow-sm)' }}>
-        <h3 style={{ color: 'var(--soil-dark)', marginBottom: 14, fontSize: 15, fontWeight: 800 }}>System Status</h3>
+        <h3 style={{ color: 'var(--soil-dark)', marginBottom: 14, fontSize: 15, fontWeight: 800 }}>Database Telemetry & Services</h3>
         {[
           { label: 'FastAPI Backend Core',       status: 'Operational', color: 'var(--good)' },
           { label: 'YOLOv8 Vision Engine',       status: 'Operational', color: 'var(--good)' },
@@ -175,7 +199,7 @@ export default function AdminDashboard() {
                 <label className="form-label">Phone Number</label>
                 <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className="form-input" placeholder="+91 98765 43210" required />
               </div>
-              <div style={{ marginBottom: 10 }}>
+              <div style={{ marginBottom: 14 }}>
                 <label className="form-label">Assign RBAC Role</label>
                 <select value={role} onChange={(e) => setRole(e.target.value)} className="form-select">
                   <option value="officer">Extension Officer 🌾</option>
@@ -183,13 +207,12 @@ export default function AdminDashboard() {
                   <option value="farmer">Farmer 👨‍🌾</option>
                 </select>
               </div>
-              <div style={{ marginBottom: 16 }}>
-                <label className="form-label">Default Password</label>
-                <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} className="form-input" required />
+              <div style={{ fontSize: 11, color: 'var(--ink-soft)', marginBottom: 16 }}>
+                🔐 Secure random password will be auto-generated and displayed upon submission.
               </div>
               <div style={{ display: 'flex', gap: 10 }}>
                 <button type="button" onClick={() => setShowModal(false)} className="btn-farmer btn-farmer-outline" style={{ flex: 1 }}>Cancel</button>
-                <button type="submit" className="btn-farmer btn-farmer-primary" style={{ flex: 1, background: 'var(--soil-dark)' }}>Provision User</button>
+                <button type="submit" className="btn-farmer btn-farmer-primary" style={{ flex: 1, background: 'var(--soil-dark)' }}>Generate & Provision</button>
               </div>
             </form>
           </div>

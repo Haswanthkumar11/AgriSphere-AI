@@ -106,7 +106,13 @@ def provision_user(db: Session, data: dict, created_by_admin: str = "adm_admin")
     phone = data.get("phone", "").strip()
     name = data.get("name", "").strip()
     role = data.get("role", "officer").strip().lower()
-    password = data.get("password", "AgriSphere@2026")
+    import secrets
+    raw_pwd = data.get("password")
+    if not raw_pwd or raw_pwd in ["password123", "AgriSphere@2026", "Officer@2026"]:
+        # Auto-generate secure 10-char password for professional display
+        raw_pwd = f"Agri@{secrets.token_urlsafe(6)}"
+    
+    password = raw_pwd
 
     if role not in ["farmer", "officer", "admin"]:
         raise ValueError("Invalid role specified. Must be 'farmer', 'officer', or 'admin'.")
@@ -147,4 +153,5 @@ def provision_user(db: Session, data: dict, created_by_admin: str = "adm_admin")
         "phone": user.phone,
         "role": profile.role,
         "status": profile.status,
+        "generated_password": password,
     }

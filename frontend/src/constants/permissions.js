@@ -1,54 +1,32 @@
-import { ROLES } from './roles';
+/**
+ * AgriSphere AI — Dynamic Role Menu Navigation
+ * Single source of truth for Role-Based Access Control (RBAC) Menus.
+ */
+import { ROUTES } from './routes';
 
-/** Permission definitions per user role */
-export const PERMISSIONS = {
-  [ROLES.FARMER]: [
-    'crop.scan',
-    'weather.view',
-    'yield.predict',
-    'grain.grade',
-    'equipment.view',
-    'equipment.book',
-    'market.view',
-    'profile.update',
+export const ROLE_MENUS = {
+  farmer: [
+    { label: 'Dashboard',         path: ROUTES.DASHBOARD,       icon: '🌾' },
+    { label: 'AI Crop Analysis',  path: ROUTES.SCAN,            icon: '📸' },
+    { label: 'Grain Quality',     path: ROUTES.GRAIN,           icon: '🌽' },
+    { label: 'P2P Marketplace',   path: ROUTES.EQUIPMENT,       icon: '🚜' },
+    { label: 'My Bookings',       path: ROUTES.BOOKINGS,        icon: '📅' },
+    { label: 'Weather',           path: ROUTES.WEATHER,         icon: '☀️' },
+    { label: 'Market Prices',     path: ROUTES.MARKET,          icon: '📈' },
+    { label: 'Yield Estimator',   path: ROUTES.YIELD,           icon: '📊' },
+    { label: 'Scan History',      path: ROUTES.CROP_HISTORY,    icon: '📜' },
+    { label: 'Profile',           path: ROUTES.PROFILE,         icon: '👤' },
   ],
-  [ROLES.EQUIPMENT_OWNER]: [
-    'crop.scan',
-    'weather.view',
-    'equipment.view',
-    'equipment.create',
-    'equipment.manage',
-    'bookings.manage',
-    'market.view',
-    'profile.update',
+  officer: [
+    { label: 'Extension Portal',  path: ROUTES.OFFICER_DASHBOARD, icon: '🌾' },
+    { label: 'Farmer Reports',   path: ROUTES.CROP_HISTORY,      icon: '📊' },
+    { label: 'Disease KB',        path: ROUTES.CROP_KB,           icon: '🔬' },
+    { label: 'Market Intelligence', path: ROUTES.MARKET,          icon: '📈' },
   ],
-  [ROLES.BOTH]: [
-    'crop.scan',
-    'weather.view',
-    'yield.predict',
-    'grain.grade',
-    'equipment.view',
-    'equipment.book',
-    'equipment.create',
-    'equipment.manage',
-    'bookings.manage',
-    'market.view',
-    'profile.update',
-  ],
-  [ROLES.ADMIN]: [
-    'users.read',
-    'users.write',
-    'users.delete',
-    'equipment.moderate',
-    'analytics.view',
-    'system.health',
-    'reports.view',
+  admin: [
+    { label: 'Admin Control',     path: ROUTES.ADMIN_DASHBOARD,  icon: '🛡️' },
+    { label: 'User Management',   path: ROUTES.ADMIN_USERS,      icon: '👥' },
+    { label: 'P2P Equipment',     path: ROUTES.EQUIPMENT,        icon: '🚜' },
+    { label: 'AI Disease KB',     path: ROUTES.CROP_KB,          icon: '📚' },
   ],
 };
-
-/** Permission checker helper */
-export function hasPermission(role, permission) {
-  if (!role) return false;
-  const userPerms = PERMISSIONS[role] || [];
-  return userPerms.includes(permission);
-}
