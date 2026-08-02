@@ -32,11 +32,11 @@ export default function AdminDashboard() {
         const dataUsers = resUsers?.data || resUsers;
         if (dataStats) {
           setStats({
-            totalFarmers: dataStats.totalFarmers || 1,
-            totalOfficers: dataStats.totalOfficers || 1,
-            totalAdmins: dataStats.totalAdmins || 1,
-            activeBookings: dataStats.activeBookings || 0,
-            aiRequests: dataStats.aiRequests || 0,
+            totalFarmers: dataStats.totalFarmers ?? 0,
+            totalOfficers: dataStats.totalOfficers ?? 0,
+            totalAdmins: dataStats.totalAdmins ?? 0,
+            activeBookings: dataStats.activeBookings ?? 0,
+            aiRequests: dataStats.aiRequests ?? 0,
           });
         }
         setUsers(Array.isArray(dataUsers) ? dataUsers : []);
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
           { label: 'FastAPI Backend Core',       status: 'Operational', color: 'var(--good)' },
           { label: 'YOLOv8 Vision Engine',       status: 'Operational', color: 'var(--good)' },
           { label: 'Gemini LLM Reasoner',       status: 'Operational', color: 'var(--good)' },
-          { label: 'ChromaDB RAG Vector Store',  status: 'Operational', color: 'var(--good)' },
+          { label: 'Live Weather Telemetry Gateway', status: 'Operational', color: 'var(--good)' },
           { label: 'PostgreSQL Database',        status: 'Operational', color: 'var(--good)' },
         ].map(({ label, status, color }) => (
           <div key={label} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px dashed var(--line)' }}>

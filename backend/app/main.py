@@ -9,7 +9,7 @@ from .core.logging_config import configure_logging
 from .core.exceptions import register_exception_handlers
 from .middleware.logging_middleware import RequestLoggingMiddleware
 from .database.session import init_db
-from .api import auth, disease, quality, advisory, market, rentals, crop, harvest, resource
+from .api import auth, disease, quality, advisory, market, rentals, crop, harvest, resource, weather, companion
 
 configure_logging()
 
@@ -36,6 +36,7 @@ os.makedirs(settings.STATIC_DIR, exist_ok=True)
 app.mount("/static", StaticFiles(directory=settings.STATIC_DIR), name="static")
 
 app.include_router(auth.router)
+app.include_router(weather.router)
 app.include_router(disease.router)
 app.include_router(quality.router)
 app.include_router(advisory.router)
@@ -44,6 +45,8 @@ app.include_router(rentals.router)
 app.include_router(crop.router)
 app.include_router(harvest.router)
 app.include_router(resource.router)
+app.include_router(companion.router)
+
 
 
 @app.on_event("startup")

@@ -7,25 +7,22 @@ import { showToast } from '@utils/toast';
 import PageHeader from '@components/layout/PageHeader';
 import Loader from '@components/ui/Loader';
 
-const MOCK_HISTORY = [
-  { session_id: 'ses_001', session_code: 'SES-TOM-2026073101', crop_type: 'Tomato', date: '2026-07-31T08:00:00', disease_name: 'Early Blight', healthy: false, severity: 'moderate', confidence_pct: 92.0 },
-  { session_id: 'ses_002', session_code: 'SES-PAD-2026072401', crop_type: 'Paddy', date: '2026-07-24T10:30:00', disease_name: 'Rice Blast', healthy: false, severity: 'mild', confidence_pct: 88.5 },
-  { session_id: 'ses_003', session_code: 'SES-CHI-2026071701', crop_type: 'Chilli', date: '2026-07-17T14:15:00', disease_name: 'Healthy', healthy: true, severity: 'none', confidence_pct: 96.0 },
-];
-
 export default function CropHistoryPage() {
   const { t } = useLang();
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [history, setHistory]   = useState([]);
-  const [loading, setLoading]   = useState(true);
+  const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     getScanHistory(user?.id || 'usr_demo')
-      .then((data) => setHistory(Array.isArray(data) && data.length ? data : MOCK_HISTORY))
-      .catch(() => setHistory(MOCK_HISTORY))
+      .then((res) => {
+        const data = res?.data || res;
+        setHistory(Array.isArray(data) ? data : []);
+      })
+      .catch(() => setHistory([]))
       .finally(() => setLoading(false));
   }, [user]);
 
@@ -75,6 +72,17 @@ export default function CropHistoryPage() {
 
       {loading ? (
         <Loader variant="spinner" message={t('loading')} />
+      ) : history.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '36px 20px', background: '#fff', borderRadius: 18, border: '1.5px dashed var(--line)' }}>
+          <div style={{ fontSize: 42, marginBottom: 8 }}>📷</div>
+          <h4 style={{ fontSize: 16, fontWeight: 800, color: 'var(--soil-dark)', marginBottom: 4 }}>No Crop Scans Yet</h4>
+          <p style={{ fontSize: 13, color: 'var(--ink-soft)', margin: '0 auto 16px', maxWidth: 340 }}>
+            You have not recorded any crop leaf scans. Upload a crop image to analyze leaf health and store database history.
+          </p>
+          <button onClick={() => navigate('/scan')} className="btn-farmer btn-farmer-primary" style={{ width: 'auto', padding: '8px 18px', fontSize: 13 }}>
+            📷 Start New Crop Scan
+          </button>
+        </div>
       ) : (
         <div>
           {history.map((item) => {

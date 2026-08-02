@@ -1,6 +1,6 @@
 /**
  * Hero Feature 1: Hybrid AI Confidence & Reliability Architecture Panel
- * Displays 4-stage pipeline execution: OpenCV -> YOLO -> Gemini Vision -> ChromaDB RAG.
+ * Displays 4-stage pipeline execution: OpenCV -> YOLO -> Gemini Vision -> Live Weather & Context.
  */
 export default function ReliabilityPanel({
   modelName = 'YOLOv8n-cls + OpenCV',
@@ -19,7 +19,7 @@ export default function ReliabilityPanel({
           🛡️ Hybrid AI Architecture Execution Flow
         </div>
         <span style={{ fontSize: 10.5, background: '#DCFCE7', color: '#166534', padding: '3px 10px', borderRadius: 999, fontWeight: 800 }}>
-          {isGrounded ? 'ICAR / KVK RAG Grounded' : 'AI Model Output'}
+          {isGrounded ? 'ICAR Advisory Grounded' : 'AI Model Output'}
         </span>
       </div>
 
@@ -38,8 +38,8 @@ export default function ReliabilityPanel({
           <div style={{ fontSize: 9.5, color: 'var(--ink-soft)' }}>Reasoning</div>
         </div>
         <div style={{ background: '#EDE9FE', border: '1px solid #C4B5FD', borderRadius: 10, padding: '6px 4px', textAlign: 'center' }}>
-          <div style={{ fontSize: 11, fontWeight: 800, color: '#5B21B6' }}>4. ChromaDB</div>
-          <div style={{ fontSize: 9.5, color: 'var(--ink-soft)' }}>RAG Vector</div>
+          <div style={{ fontSize: 11, fontWeight: 800, color: '#5B21B6' }}>4. Context</div>
+          <div style={{ fontSize: 9.5, color: 'var(--ink-soft)' }}>Weather & Crop</div>
         </div>
       </div>
 
@@ -53,8 +53,8 @@ export default function ReliabilityPanel({
           <strong style={{ color: 'var(--soil-dark)' }}>{inferenceTimeMs} ms</strong>
         </div>
         <div>
-          <span style={{ color: 'var(--ink-soft)' }}>Reasoning & RAG:</span>{' '}
-          <strong style={{ color: 'var(--soil-dark)' }}>Gemini + ChromaDB</strong>
+          <span style={{ color: 'var(--ink-soft)' }}>Reasoning Engine:</span>{' '}
+          <strong style={{ color: 'var(--soil-dark)' }}>Gemini Vision AI</strong>
         </div>
         <div>
           <span style={{ color: 'var(--ink-soft)' }}>Confidence Score:</span>{' '}
@@ -63,7 +63,7 @@ export default function ReliabilityPanel({
       </div>
 
       <p style={{ fontSize: 11, color: 'var(--ink-soft)', marginTop: 12, borderTop: '1px dashed var(--line)', paddingTop: 8, fontStyle: 'italic', margin: 0 }}>
-        ℹ️ <strong>Separation of Concerns:</strong> YOLO performs real-time visual localization, Gemini Vision performs agricultural reasoning, and ChromaDB grounds recommendations in official ICAR/KVK manuals.
+        ℹ️ <strong>Separation of Concerns:</strong> OpenCV preprocesses image quality, YOLO performs visual crop localization, Gemini Vision executes multimodal reasoning, and live weather telemetry ground final action steps.
       </p>
     </div>
   );

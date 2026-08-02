@@ -43,45 +43,9 @@ export default function ScanPage() {
           setVoiceMsg(v.message_text || t('diseaseBody'));
         } catch { setVoiceMsg(t('diseaseBody')); }
       }
-    } catch {
-      // Offline fallback
-      await new Promise((r) => setTimeout(r, 900));
+    } catch (err) {
       setApiOnline(false);
-      const isDiseased = Math.random() > 0.45;
-      const diseaseName = isDiseased ? 'Early Blight' : 'Healthy';
-      const mockSession = {
-        session_id: 'ses_mock_' + Date.now(),
-        crop_type: selectedCrop,
-        scan: { image_url: url },
-        prediction: {
-          disease_name: diseaseName,
-          healthy: !isDiseased,
-          confidence: 0.92,
-          confidence_pct: 92.0,
-          severity: isDiseased ? 'moderate' : 'none',
-          affected_area_pct: isDiseased ? 14.5 : 0.0,
-          model_used: 'YOLOv8n-cls + Gemini Vision + ChromaDB RAG',
-          inference_time_ms: 142.8,
-          explanation: isDiseased
-            ? 'Fungal lesions identified on lower leaf surface.'
-            : 'Leaf surface exhibits uniform chlorophyll distribution and zero disease lesions.',
-          reliability_tier: 'HIGH',
-        },
-        treatment: {
-          chemical_treatment: 'Spray Copper Oxychloride 50 WP (3g/L) within 48 hours.',
-          organic_treatment: 'Spray Neem Oil 1500 ppm (5ml/L) + Trichoderma viride.',
-          spray_window: 'Early morning (6:00 AM - 8:30 AM)',
-          recovery_days: 7,
-          action_steps: [
-            '1. Spray recommended fungicide within 48 hours.',
-            '2. Switch to drip irrigation; avoid leaf wetness.',
-            '3. Rescan in 5–7 days to track recovery.',
-          ],
-          is_kb_grounded: true,
-        },
-      };
-      setSession(mockSession);
-      if (isDiseased) setVoiceMsg(t('diseaseBody'));
+      showToast(err?.response?.data?.detail || 'AI Crop Scan Service Offline — Could not reach backend server.');
     } finally {
       setScanning(false);
     }
@@ -181,7 +145,7 @@ export default function ScanPage() {
               ✔ Gemini Vision 2.0 LLM
             </span>
             <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--good)', background: '#EDF6EC', border: '1px solid #C8E6C9', padding: '3px 8px', borderRadius: 6 }}>
-              ✔ ChromaDB RAG Search
+              ✔ Live Weather Context
             </span>
             <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--good)', background: '#EDF6EC', border: '1px solid #C8E6C9', padding: '3px 8px', borderRadius: 6 }}>
               ✔ ICAR Grounded Advisory

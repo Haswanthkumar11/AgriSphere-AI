@@ -12,51 +12,34 @@ const CROP_TABS = [
   { key: 'Chilli', icon: '🌶️' },
 ];
 
-const STATIC_PRICES = [
-  { crop: 'Tomato', icon: '🍅', price: 1840, trend_percent: 6,  mandi: 'Tirupati' },
-  { crop: 'Paddy',  icon: '🌾', price: 2150, trend_percent: -2, mandi: 'Tirupati' },
-  { crop: 'Chilli', icon: '🌶️', price: 14200, trend_percent: 11, mandi: 'Tirupati' },
-];
-
 export default function MarketPage() {
   const { t } = useLang();
-  const [prices, setPrices]     = useState([]);
+  const [prices, setPrices] = useState([]);
   const [loadingPrices, setLoadingPrices] = useState(true);
-  const [activeCrop, setActiveCrop]       = useState('Tomato');
-  const [prediction, setPrediction]       = useState(null);
-  const [forecast, setForecast]           = useState([]);
-  const [loadingPred, setLoadingPred]     = useState(false);
+  const [activeCrop, setActiveCrop] = useState('Tomato');
+  const [prediction, setPrediction] = useState(null);
+  const [forecast, setForecast] = useState([]);
+  const [loadingPred, setLoadingPred] = useState(false);
 
   useEffect(() => {
     getPrices()
-      .then((d) => setPrices(d?.prices || STATIC_PRICES))
-      .catch(() => setPrices(STATIC_PRICES))
+      .then((d) => setPrices(d?.prices || []))
+      .catch(() => setPrices([]))
       .finally(() => setLoadingPrices(false));
   }, []);
 
   useEffect(() => {
     setLoadingPred(true);
     setPrediction(null);
+    setForecast([]);
     Promise.all([getMarketPrediction(activeCrop), getPriceForecast(activeCrop)])
       .then(([pred, fore]) => {
         setPrediction(pred);
         setForecast(fore?.price_forecast || []);
       })
       .catch(() => {
-        // Offline fallback
-        const base = activeCrop === 'Tomato' ? 1840 : activeCrop === 'Paddy' ? 2150 : 14200;
-        setPrediction({
-          current_price: base,
-          predicted_trend: 'up',
-          best_selling_window: 'Next 5–7 days',
-          ai_recommendation: `${activeCrop} prices are showing upward momentum. Consider selling within the week for maximum returns.`,
-          reasoning: 'Based on seasonal demand patterns and nearby mandi data.',
-        });
-        setForecast(Array.from({ length: 7 }, (_, i) => ({
-          date: new Date(Date.now() + i * 86400000).toISOString(),
-          predicted_price: base * (1 + (i * 0.007) + (Math.random() * 0.01 - 0.005)),
-          confidence: 0.78,
-        })));
+        setPrediction(null);
+        setForecast([]);
       })
       .finally(() => setLoadingPred(false));
   }, [activeCrop]);
@@ -72,6 +55,14 @@ export default function MarketPage() {
 
       {loadingPrices ? (
         <Loader variant="spinner" message={t('loading')} />
+      ) : prices.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '24px 16px', background: '#fff', borderRadius: 16, border: '1px border var(--line)', marginBottom: 16 }}>
+          <div style={{ fontSize: 32, marginBottom: 6 }}>📊</div>
+          <h5 style={{ fontSize: 14, fontWeight: 800, color: 'var(--soil-dark)', marginBottom: 2 }}>Mandi Market Prices Unavailable</h5>
+          <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: 0 }}>
+            Real-time mandi rates could not be fetched from the backend service.
+          </p>
+        </div>
       ) : (
         prices.map((p) => (
           <PriceCard
@@ -118,7 +109,15 @@ export default function MarketPage() {
 
           <PriceForecast points={forecast} title={t('priceforecast')} />
         </>
-      ) : null}
+      ) : (
+        <div style={{ textAlign: 'center', padding: '24px 16px', background: '#fff', borderRadius: 16, border: '1px border var(--line)' }}>
+          <div style={{ fontSize: 28, marginBottom: 4 }}>📈</div>
+          <h5 style={{ fontSize: 13, fontWeight: 800, color: 'var(--soil-dark)', marginBottom: 2 }}>AI Market Prediction Unavailable</h5>
+          <p style={{ fontSize: 12, color: 'var(--ink-soft)', margin: 0 }}>
+            Price trend prediction service is currently offline.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

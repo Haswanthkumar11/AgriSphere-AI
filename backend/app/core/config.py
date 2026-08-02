@@ -46,7 +46,8 @@ class Settings:
     DEMO_FARMER_ID: str = "usr_demo"
     DEMO_REGION: str = "Tirupati, Andhra Pradesh"
 
-    # --- AI & Audio Integrations ---
+    # --- AI, Weather & Audio Integrations ---
+    OPENWEATHERMAP_API_KEY: str | None = os.getenv("OPENWEATHERMAP_API_KEY", os.getenv("OPENWEATHER_API_KEY"))
     GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY")
     ASSEMBLYAI_API_KEY: str | None = os.getenv("ASSEMBLYAI_API_KEY")
     MURF_API_KEY: str | None = os.getenv("MURF_API_KEY")

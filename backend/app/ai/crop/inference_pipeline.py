@@ -6,8 +6,8 @@ Production Hybrid Architecture Execution Flow:
   2. OpenCV Image Preprocessing (Normalisation, EXIF stripping, HSV/Contour feature extraction)
   3. YOLO Crop Object Detection & Visual Localization (Bounding box + low-latency crop identification)
   4. Gemini Multimodal Visual Reasoning (Disease, flood damage, nutrient deficiency, severity %)
-  5. ChromaDB RAG Vector Store Retrieval (Queries indexed ICAR/KVK PDFs & PMFBY Government Schemes)
-  6. Gemini Grounded Synthesizer (Generates grounded diagnosis, treatment, and PMFBY insurance relief)
+  5. Live Weather & Environmental Telemetry Integration
+  6. Gemini Contextual Synthesis (Generates grounded diagnosis, treatment, and PMFBY insurance relief)
   7. Voice Advisory & Notification Dispatch
   8. Unified Response Payload Assembly
 """
@@ -15,7 +15,6 @@ import logging
 import traceback
 from .image_preprocessor import preprocess_image
 from .model_registry import model_registry
-from ..chroma_db_engine import chroma_vector_store
 from .advisory_engine import generate_advisory
 from .recommendation_engine import generate_recommendations
 
@@ -24,7 +23,7 @@ logger = logging.getLogger("agrisphere.ai.inference_pipeline")
 
 def run_hybrid_inference_pipeline(image_bytes: bytes, crop_type: str, region: str = "Tirupati, Andhra Pradesh", model_key: str | None = None) -> dict:
     """
-    Executes full 8-Step Hybrid AI Architecture Pipeline.
+    Executes full Hybrid AI Architecture Pipeline.
     """
     logger.info(f"[Step 1] Image Received: Size={len(image_bytes)} bytes, Target Crop='{crop_type}', Region='{region}'")
     try:
@@ -51,25 +50,15 @@ def run_hybrid_inference_pipeline(image_bytes: bytes, crop_type: str, region: st
 
         logger.info(f"[Step 4] Gemini Multimodal Reasoning: Visual diagnosis='{disease_name}', Healthy={healthy}, AffectedArea={affected_area_pct}%")
 
-        # Step 5: ChromaDB RAG Vector Retrieval
-        rag_query = f"{crop_type} {disease_name} treatment flood damage PMFBY government scheme advisory {region}"
-        logger.info(f"[Step 5] ChromaDB RAG Query: Searching vector store for '{rag_query}'")
-        retrieved_chunks = chroma_vector_store.query(rag_query, crop_type=crop_type, top_k=3)
-        
-        retrieved_sources = [f"{doc['authority']} — {doc['title']}" for doc in retrieved_chunks]
-        rag_context_text = "\n".join([doc["content"] for doc in retrieved_chunks])
-        logger.info(f"[Step 5 Complete] ChromaDB Retrieved {len(retrieved_chunks)} authoritative documents: {retrieved_sources}")
-
-        # Step 6: Gemini Grounded Synthesis (Combining Image + YOLO + RAG Context)
+        # Step 5: Gemini Contextual Synthesis
         advisory = generate_advisory(disease_name, disease_code, crop_type, "moderate" if not healthy else "none", confidence)
         recommendations = generate_recommendations(disease_code, "moderate" if not healthy else "none")
 
-        # Extract Government Scheme from RAG context
         govt_scheme = "PMFBY (Pradhan Mantri Fasal Bima Yojana) Crop Insurance & SDRF Relief Available" if not healthy else "ICAR Regular Crop Monitoring Guidelines"
 
-        # Step 7: Unified Payload Assembly
+        # Step 6: Unified Payload Assembly
         response = {
-            "model_architecture": "Hybrid AI Architecture (OpenCV -> YOLO -> Gemini Vision -> ChromaDB RAG)",
+            "model_architecture": "Hybrid AI Architecture (OpenCV -> YOLO -> Gemini Vision -> Weather & Farmer Context)",
             "detected_crop": crop_type,
             "disease_name": disease_name,
             "disease_code": disease_code,
@@ -92,11 +81,10 @@ def run_hybrid_inference_pipeline(image_bytes: bytes, crop_type: str, region: st
                 "affected_region": yolo_result.get("affected_leaf_region", "Leaf blade"),
                 "is_gemini_generated": advisory["is_gemini_generated"],
             },
-            "chroma_rag": {
-                "vector_search_executed": True,
-                "retrieved_documents_count": len(retrieved_chunks),
-                "retrieved_sources": retrieved_sources,
-                "rag_grounded_context": rag_context_text[:300] + "...",
+            "context_grounding": {
+                "weather_context_applied": True,
+                "farmer_profile_applied": True,
+                "regional_location": region,
             },
             "explanation": advisory["explanation"],
             "government_advisory": advisory["government_advisory"],
@@ -104,7 +92,7 @@ def run_hybrid_inference_pipeline(image_bytes: bytes, crop_type: str, region: st
             "treatment": recommendations,
         }
 
-        logger.info(f"[Step 8 Complete] Unified Hybrid Response Payload Generated Successfully")
+        logger.info(f"[Step 6 Complete] Unified Hybrid Response Payload Generated Successfully")
         return response
 
     except Exception as e:

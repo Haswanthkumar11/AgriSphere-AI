@@ -107,47 +107,67 @@ export default function EquipmentPage() {
       {/* Equipment Marketplace Grid */}
       {!loading && (
         <div style={{ display: 'grid', gap: 14 }}>
-          {equipmentList.map((item) => (
-            <div key={item.id} style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 18, padding: 16, boxShadow: 'var(--shadow)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                    <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--soil-dark)', margin: 0 }}>{item.name}</h3>
-                    {item.is_verified && <span style={{ fontSize: 11, background: '#EDF6EC', color: 'var(--good)', padding: '2px 6px', borderRadius: 6, fontWeight: 800 }}>Verified Owner ✔️</span>}
-                  </div>
-                  <div style={{ fontSize: 12, color: 'var(--ink-soft)', marginTop: 2 }}>
-                    📍 {item.village}, {item.district} • Owner: <strong>{item.owner_name}</strong>
-                  </div>
-                </div>
-                <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--soil)' }}>₹{item.price_per_day}</div>
-                  <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>per day</div>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', gap: 12, fontSize: 12, margin: '10px 0', color: 'var(--ink)' }}>
-                <span>Operator: <strong>{item.operator_available ? '👨‍🌾 Available' : 'No'}</strong></span>
-                <span>Available: <strong style={{ color: item.is_available ? 'var(--good)' : 'var(--bad)' }}>{item.is_available ? 'Yes' : 'No'}</strong></span>
-              </div>
-
-              <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
-                <button
-                  disabled={!item.is_available}
-                  onClick={() => setBookingTarget(item)}
-                  className="btn-farmer btn-farmer-primary"
-                  style={{ flex: 2, fontSize: 13 }}
-                >
-                  📅 Request Booking
-                </button>
-                <a href={item.call_link} className="btn-farmer btn-farmer-outline" style={{ flex: 1, textDecoration: 'none', textAlign: 'center', fontSize: 12 }}>
-                  📞 Call
-                </a>
-                <a href={item.whatsapp_link} target="_blank" rel="noreferrer" className="btn-farmer btn-farmer-outline" style={{ flex: 1, textDecoration: 'none', textAlign: 'center', fontSize: 12, color: '#128C7E', borderColor: '#128C7E' }}>
-                  💬 WhatsApp
-                </a>
-              </div>
+          {equipmentList.length === 0 ? (
+            <div style={{ textAlign: 'center', padding: '36px 20px', background: '#fff', borderRadius: 18, border: '1.5px dashed var(--line)' }}>
+              <div style={{ fontSize: 42, marginBottom: 8 }}>🚜</div>
+              <h4 style={{ fontSize: 16, fontWeight: 800, color: 'var(--soil-dark)', marginBottom: 4 }}>No Equipment Listed Yet</h4>
+              <p style={{ fontSize: 13, color: 'var(--ink-soft)', margin: '0 auto 16px', maxWidth: 360 }}>
+                There are currently no active equipment listings for this category in the database. Be the first farmer to list your tractor or tool!
+              </p>
+              <button onClick={() => setShowAddModal(true)} className="btn-farmer btn-farmer-primary" style={{ width: 'auto', padding: '8px 18px', fontSize: 13 }}>
+                ➕ List Your Equipment
+              </button>
             </div>
-          ))}
+          ) : (
+            equipmentList.map((item) => (
+              <div key={item.id} style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 18, padding: 16, boxShadow: 'var(--shadow)' }}>
+                {item.image_url && !item.image_url.includes('placeholder') && !item.image_url.includes('sample') && (
+                  <img
+                    src={item.image_url}
+                    alt={item.name}
+                    style={{ width: '100%', height: 160, objectFit: 'cover', borderRadius: 12, marginBottom: 12 }}
+                  />
+                )}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <h3 style={{ fontSize: 16, fontWeight: 800, color: 'var(--soil-dark)', margin: 0 }}>{item.name}</h3>
+                      {item.is_verified && <span style={{ fontSize: 11, background: '#EDF6EC', color: 'var(--good)', padding: '2px 6px', borderRadius: 6, fontWeight: 800 }}>Verified Owner ✔️</span>}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'var(--ink-soft)', marginTop: 2 }}>
+                      📍 {item.village}, {item.district} • Owner: <strong>{item.owner_name}</strong>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--soil)' }}>₹{item.price_per_day}</div>
+                    <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>per day</div>
+                  </div>
+                </div>
+
+                <div style={{ display: 'flex', gap: 12, fontSize: 12, margin: '10px 0', color: 'var(--ink)' }}>
+                  <span>Operator: <strong>{item.operator_available ? '👨‍🌾 Available' : 'No'}</strong></span>
+                  <span>Available: <strong style={{ color: item.is_available ? 'var(--good)' : 'var(--bad)' }}>{item.is_available ? 'Yes' : 'No'}</strong></span>
+                </div>
+
+                <div style={{ display: 'flex', gap: 10, marginTop: 12 }}>
+                  <button
+                    disabled={!item.is_available}
+                    onClick={() => setBookingTarget(item)}
+                    className="btn-farmer btn-farmer-primary"
+                    style={{ flex: 2, fontSize: 13 }}
+                  >
+                    📅 Request Booking
+                  </button>
+                  <a href={item.call_link} className="btn-farmer btn-farmer-outline" style={{ flex: 1, textDecoration: 'none', textAlign: 'center', fontSize: 12 }}>
+                    📞 Call
+                  </a>
+                  <a href={item.whatsapp_link} target="_blank" rel="noreferrer" className="btn-farmer btn-farmer-outline" style={{ flex: 1, textDecoration: 'none', textAlign: 'center', fontSize: 12, color: '#128C7E', borderColor: '#128C7E' }}>
+                    💬 WhatsApp
+                  </a>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       )}
 

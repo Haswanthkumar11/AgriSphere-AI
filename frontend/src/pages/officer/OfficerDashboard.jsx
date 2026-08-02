@@ -57,32 +57,44 @@ export default function OfficerDashboard() {
         </select>
       </div>
 
-      {/* 4-Stat Overview Cards */}
+      {/* Dynamic 4-Stat Overview Cards (SQL-Driven) */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: 8, marginBottom: 16 }}>
         <div style={{ background: '#fff', border: '1px solid var(--line)', padding: 10, borderRadius: 12, textAlign: 'center' }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--soil)' }}>89.4%</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--soil)' }}>
+            {recentScans.length ? `${Math.round((recentScans.filter(s => s.healthy).length / recentScans.length) * 100)}%` : 'N/A'}
+          </div>
           <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>Crop Health Index</div>
         </div>
         <div style={{ background: '#FFF3D6', border: '1px solid var(--warn)', padding: 10, borderRadius: 12, textAlign: 'center' }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--warn)' }}>14</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--warn)' }}>
+            {recentScans.filter(s => !s.healthy).length}
+          </div>
           <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>Hotspot Alerts</div>
         </div>
         <div style={{ background: '#EDF6EC', border: '1px solid var(--good)', padding: 10, borderRadius: 12, textAlign: 'center' }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--good)' }}>42</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: 'var(--good)' }}>{recentScans.length}</div>
           <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>Scans Monitored</div>
         </div>
         <div style={{ background: '#EAEFFF', border: '1px solid #2B4A8E', padding: 10, borderRadius: 12, textAlign: 'center' }}>
-          <div style={{ fontSize: 18, fontWeight: 800, color: '#2B4A8E' }}>3</div>
-          <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>Flood Submersions</div>
+          <div style={{ fontSize: 18, fontWeight: 800, color: '#2B4A8E' }}>
+            {recentScans.filter(s => s.affected_area_pct > 30).length}
+          </div>
+          <div style={{ fontSize: 10, color: 'var(--ink-soft)' }}>High Severity Scans</div>
         </div>
       </div>
 
-      {/* Disease Hotspot Heatmap Alert */}
-      <AdvisoryBanner
-        icon="⚠️"
-        title="District Hotspot Alert: Early Blight in Tomato (Tirupati East Mandal)"
-        body="ICAR Advisory: High relative humidity (>85%) observed over the past 48h. Whitefly vector activity elevated in low-lying fields. Immediate copper oxychloride spray recommended."
-      />
+      {/* Disease Hotspot Heatmap Alert or Empty State */}
+      {recentScans.filter(s => !s.healthy).length > 0 ? (
+        <AdvisoryBanner
+          icon="⚠️"
+          title={`District Hotspot Alert: ${recentScans.find(s => !s.healthy)?.disease_name || 'Crop Disease'} Detected`}
+          body={`Extension Surveillance: Disease symptoms recorded in recent scans for ${district} district. Field inspection and treatment advisories recommended.`}
+        />
+      ) : (
+        <div style={{ background: '#F8FAFC', border: '1px border var(--line)', borderRadius: 14, padding: 14, marginBottom: 16, fontSize: 12, color: 'var(--ink-soft)', textAlign: 'center' }}>
+          ℹ️ <strong>Surveillance Status:</strong> Not enough data to generate district hotspot analytics. Farmers in {district} district can submit crop leaf scans to populate live disease maps.
+        </div>
+      )}
 
       {/* Broadcast Advisory Form */}
       <div style={{ background: '#fff', border: '1.5px solid var(--line)', borderRadius: 18, padding: 16, margin: '16px 0', boxShadow: 'var(--shadow-sm)' }}>

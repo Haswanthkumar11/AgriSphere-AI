@@ -1,16 +1,16 @@
 import client from './client';
 
-/** Get current weather for a region. */
-export const getCurrentWeather = (region = 'Tirupati') =>
-  client.get(`/api/v1/weather/current?region=${encodeURIComponent(region)}`);
+/** Get current weather for a city with crop-aware AI recommendation. */
+export const getCurrentWeather = (city = 'Tirupati', crop = 'Paddy') =>
+  client.get(`/api/v1/weather/current?city=${encodeURIComponent(city)}&crop=${encodeURIComponent(crop)}`);
 
-/** Get 7-day weather forecast. */
-export const getWeatherForecast = (region = 'Tirupati', days = 7) =>
-  client.get(`/api/v1/weather/forecast?region=${encodeURIComponent(region)}&days=${days}`);
+/** Get 5-day weather forecast. */
+export const getWeatherForecast = (city = 'Tirupati') =>
+  client.get(`/api/v1/weather/forecast?city=${encodeURIComponent(city)}`);
 
-/** Get weather alerts for a region. */
-export const getWeatherAlerts = (region = 'Tirupati') =>
-  client.get(`/api/v1/weather/alerts?region=${encodeURIComponent(region)}`);
+/** Get weather alerts for a city. */
+export const getWeatherAlerts = (city = 'Tirupati') =>
+  client.get(`/api/v1/weather/alerts?city=${encodeURIComponent(city)}`);
 
 /** Legacy endpoint — used by existing weather strip on market screen. */
 export const getWeatherLegacy = () =>
