@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLang } from '@hooks/useLang';
 import { ROUTES } from '@constants/routes';
 
