@@ -6,7 +6,7 @@ Routers never touch this file directly — they receive a `Session` via
 `Depends(get_db)` and pass it straight into a service, per the Dependency
 Injection + Repository Pattern rules.
 """
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from ..core.config import settings
@@ -26,12 +26,21 @@ def get_db():
 
 
 def init_db() -> None:
-    """Create all tables and seed demo data. Called once on app startup."""
-    # Import models so they register on Base.metadata before create_all runs.
+    """Create all tables, migrate schemas, and seed demo data. Called once on app startup."""
     from .. import models  # noqa: F401
     from .seed import seed_demo_data
 
     Base.metadata.create_all(bind=engine)
+
+    # Auto-migrate new farmer columns if database pre-existed
+    with engine.connect() as conn:
+        try:
+            conn.execute(text("ALTER TABLE farmers ADD COLUMN IF NOT EXISTS state VARCHAR;"))
+            conn.execute(text("ALTER TABLE farmers ADD COLUMN IF NOT EXISTS district VARCHAR;"))
+            conn.execute(text("ALTER TABLE farmers ADD COLUMN IF NOT EXISTS village VARCHAR;"))
+            conn.commit()
+        except Exception:
+            pass
 
     db = SessionLocal()
     try:

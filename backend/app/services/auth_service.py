@@ -46,9 +46,12 @@ def register_user(db: Session, data: dict) -> dict:
     # 3. Create Farmer domain metadata in farmers table
     farmer_domain = Farmer(
         user_id=user.id,
-        crop_type=data.get("crop_type", "Tomato"),
-        land_size=float(data.get("land_size_acres", 1.0)),
+        crop_type=data.get("crop_type"),
+        land_size=float(data["land_size_acres"]) if data.get("land_size_acres") else None,
         language=data.get("language", "en"),
+        state=data.get("state"),
+        district=data.get("district"),
+        village=data.get("village"),
     )
     db.add(farmer_domain)
     db.commit()
@@ -60,6 +63,8 @@ def register_user(db: Session, data: dict) -> dict:
         "name": profile.full_name,
         "phone": user.phone,
         "role": profile.role,
+        "state": farmer_domain.state,
+        "district": farmer_domain.district,
         "crop_type": farmer_domain.crop_type,
         "land_size_acres": farmer_domain.land_size,
     }
@@ -83,6 +88,8 @@ def login_user(db: Session, phone: str, password: str) -> dict:
         db.add(profile)
         db.commit()
 
+    farmer = db.query(Farmer).filter(Farmer.user_id == user.id).first()
+
     user.last_login = datetime.utcnow()
     db.commit()
 
@@ -97,6 +104,12 @@ def login_user(db: Session, phone: str, password: str) -> dict:
             "name": profile.full_name,
             "phone": user.phone,
             "role": profile.role,
+            "state": farmer.state if farmer else None,
+            "district": farmer.district if farmer else None,
+            "village": farmer.village if farmer else None,
+            "crop_type": farmer.crop_type if farmer else None,
+            "land_size": farmer.land_size if farmer else None,
+            "language": farmer.language if farmer else "en",
         },
     }
 
@@ -109,7 +122,6 @@ def provision_user(db: Session, data: dict, created_by_admin: str = "adm_admin")
     import secrets
     raw_pwd = data.get("password")
     if not raw_pwd or raw_pwd in ["password123", "AgriSphere@2026", "Officer@2026"]:
-        # Auto-generate secure 10-char password for professional display
         raw_pwd = f"Agri@{secrets.token_urlsafe(6)}"
     
     password = raw_pwd
@@ -140,8 +152,12 @@ def provision_user(db: Session, data: dict, created_by_admin: str = "adm_admin")
     if role == "farmer":
         farmer_domain = Farmer(
             user_id=user.id,
-            crop_type=data.get("crop_type", "Tomato"),
-            land_size=float(data.get("land_size_acres", 1.0)),
+            crop_type=data.get("crop_type"),
+            land_size=float(data["land_size_acres"]) if data.get("land_size_acres") else None,
+            state=data.get("state"),
+            district=data.get("district"),
+            village=data.get("village"),
+            language=data.get("language", "en"),
         )
         db.add(farmer_domain)
 

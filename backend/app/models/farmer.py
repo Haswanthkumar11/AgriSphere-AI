@@ -18,8 +18,11 @@ class Farmer(Base):
 
     id = Column(String, primary_key=True, default=generate_uuid)
     user_id = Column(String, ForeignKey("users.id", ondelete="CASCADE"), unique=True, index=True, nullable=False)
-    crop_type = Column(String, default="Tomato", nullable=False)
-    land_size = Column(Float, default=1.0, nullable=False)
+    crop_type = Column(String, nullable=True)
+    land_size = Column(Float, nullable=True)
     language = Column(String, default="en", nullable=False)
+    state = Column(String, nullable=True)
+    district = Column(String, nullable=True)
+    village = Column(String, nullable=True)
     preferred_units = Column(String, default="acres", nullable=False)
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)

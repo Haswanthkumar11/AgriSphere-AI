@@ -2,9 +2,10 @@ import { createContext, useContext, useState, useCallback, useMemo } from 'react
 import en from '@locales/en';
 import te from '@locales/te';
 import hi from '@locales/hi';
+import ta from '@locales/ta';
 import kn from '@locales/kn';
 
-const languages = { en, te, hi, kn };
+const languages = { en, te, hi, ta, kn };
 const STORAGE_KEY = 'agri_lang';
 
 const LanguageContext = createContext(null);

@@ -31,12 +31,15 @@ function lazyRetry(componentImport) {
   });
 }
 
+import ProfileGuard from './ProfileGuard';
+
 // ── Lazy-loaded pages ──
 const LanguageSelect = lazyRetry(() => import('@pages/LanguageSelect'));
 const Login          = lazyRetry(() => import('@pages/Login'));
 const AdminLogin     = lazyRetry(() => import('@pages/AdminLogin'));
 const OfficerLogin   = lazyRetry(() => import('@pages/officer/OfficerLogin'));
 const Register       = lazyRetry(() => import('@pages/Register'));
+const CompleteProfilePage = lazyRetry(() => import('@pages/farmer/CompleteProfilePage'));
 
 const Dashboard      = lazyRetry(() => import('@pages/farmer/Dashboard'));
 const ScanPage       = lazyRetry(() => import('@pages/farmer/ScanPage'));
@@ -95,7 +98,8 @@ export default function AppRouter() {
           </Route>
 
           {/* Farmer workspace routes (gated strictly to role='farmer') */}
-          <Route element={<FarmerRoute><FarmerLayout /></FarmerRoute>}>
+          <Route element={<FarmerRoute><ProfileGuard><FarmerLayout /></ProfileGuard></FarmerRoute>}>
+            <Route path="/complete-profile"      element={<CompleteProfilePage />} />
             <Route path={ROUTES.DASHBOARD}       element={<Dashboard />} />
             <Route path={ROUTES.SCAN}            element={<ScanPage />} />
             <Route path={ROUTES.WEATHER}         element={<WeatherPage />} />
