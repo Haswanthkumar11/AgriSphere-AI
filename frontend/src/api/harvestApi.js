@@ -49,3 +49,9 @@ export const compareHarvests = (sessionId1, sessionId2) =>
 /** List grain guide standards & parameters. */
 export const getHarvestKnowledgeBase = () =>
   client.get('/api/v1/harvest/knowledge-base');
+
+/** Download official AGMARK Grain Quality Passport PDF Report. */
+export const downloadGrainReport = (sessionId) => {
+  const baseURL = import.meta.env.VITE_API_BASE || '';
+  window.open(`${baseURL}/api/v1/harvest/report/${sessionId}`, '_blank');
+};

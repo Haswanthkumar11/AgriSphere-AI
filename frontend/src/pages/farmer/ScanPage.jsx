@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLang } from '@hooks/useLang';
 import { useAuth } from '@hooks/useAuth';
-import { scanCrop } from '@api/cropApi';
+import { scanCrop, downloadCropReport } from '@api/cropApi';
 import { dispatchVoiceAlert } from '@api/diseaseApi';
 import { CROPS } from '@constants/crops';
 import { ROUTES } from '@constants/routes';
@@ -150,6 +150,28 @@ export default function ScanPage() {
             <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--good)', background: '#EDF6EC', border: '1px solid #C8E6C9', padding: '3px 8px', borderRadius: 6 }}>
               ✔ ICAR Grounded Advisory
             </span>
+          </div>
+
+          {/* PDF Report Download Button */}
+          <div style={{ margin: '14px 0 6px' }}>
+            <button
+              onClick={() => downloadCropReport(session.session_id || 'AI-SESSION')}
+              className="btn-farmer btn-farmer-primary"
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                fontSize: 14,
+                fontWeight: 800,
+                padding: '12px 16px',
+                background: 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)',
+                boxShadow: '0 4px 14px rgba(46, 125, 50, 0.25)',
+              }}
+            >
+              📄 Download Official PDF Report
+            </button>
           </div>
 
           {/* Result Card */}

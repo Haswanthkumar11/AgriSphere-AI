@@ -5,7 +5,7 @@ import StorageAdvisorCard from '@components/farmer/StorageAdvisorCard';
 import MarketReadinessCard from '@components/farmer/MarketReadinessCard';
 import GrainPassportCard from '@components/farmer/GrainPassportCard';
 import Skeleton from '@components/ui/Skeleton';
-import { analyzeHarvestGrain } from '@api/harvestApi';
+import { analyzeHarvestGrain, downloadGrainReport } from '@api/harvestApi';
 import { useLang } from '@hooks/useLang';
 
 export default function GrainPage() {
@@ -124,6 +124,27 @@ export default function GrainPage() {
           />
 
           {/* Step 5: Official Grain Quality Passport */}
+          <div style={{ margin: '14px 0 8px' }}>
+            <button
+              onClick={() => downloadGrainReport(result.session_id || result.passport_id || 'GRAIN-PASSPORT')}
+              className="btn-farmer btn-farmer-primary"
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                fontSize: 14,
+                fontWeight: 800,
+                padding: '12px 16px',
+                background: 'linear-gradient(135deg, #D97706 0%, #B45309 100%)',
+                boxShadow: '0 4px 14px rgba(217, 119, 6, 0.25)',
+              }}
+            >
+              📄 Download Official Grain Quality Passport PDF
+            </button>
+          </div>
+
           <GrainPassportCard
             passportId={result.passport_id}
             cropType={result.crop_type}

@@ -90,7 +90,7 @@ class ProfileTool:
     def execute(db: Session, user_id: str = "usr_demo") -> dict:
         try:
             sql = """
-            SELECT p.full_name, p.role, f.crop_type, f.land_size, f.district
+            SELECT p.full_name, p.role, f.crop_type, f.land_size
             FROM user_profiles p
             LEFT JOIN farmers f ON p.user_id = f.user_id
             WHERE p.user_id = :u;
@@ -102,7 +102,7 @@ class ProfileTool:
                     "role": row[1],
                     "crop_type": row[2] or "Paddy",
                     "land_size_acres": row[3] or 1.0,
-                    "district": row[4] or "Tirupati",
+                    "district": "Tirupati",
                 }
         except Exception as e:
             logger.error(f"ProfileTool error: {e}")

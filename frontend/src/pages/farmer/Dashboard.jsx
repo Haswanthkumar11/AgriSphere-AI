@@ -46,13 +46,6 @@ const STAT_CARDS = (navigate, bookingsCount, unreadNotifs, weatherSummary, lates
   },
 ];
 
-const QUICK_ACTIONS = (navigate) => [
-  { label: 'Scan Crop Disease', icon: '📷', route: ROUTES.SCAN, variant: 'primary' },
-  { label: 'Grain Quality Check', icon: '🌾', route: ROUTES.GRAIN, variant: 'amber' },
-  { label: 'Rent Equipment', icon: '🚜', route: ROUTES.EQUIPMENT, variant: '' },
-  { label: 'Weather Forecast', icon: '☁️', route: ROUTES.WEATHER, variant: '' },
-];
-
 export default function Dashboard() {
   const { user } = useAuth();
   const { t } = useLang();
@@ -126,22 +119,88 @@ export default function Dashboard() {
   }, [farmerCrop, userId]);
 
   const stats = STAT_CARDS(navigate, bookingsCount, unreadNotifs, weatherSummary, latestScan, latestHarvest);
-  const actions = QUICK_ACTIONS(navigate);
+
+  const materialQuickActions = [
+    { label: '🌾 Diagnose', route: ROUTES.SCAN, icon: '🌿' },
+    { label: '☁️ Weather', route: ROUTES.WEATHER, icon: '🌦️' },
+    { label: '🎤 Companion', route: '/companion', icon: '🤖' },
+    { label: '🚜 Marketplace', route: ROUTES.EQUIPMENT, icon: '🚜' },
+    { label: '📈 Prices', route: ROUTES.MARKET, icon: '📊' },
+    { label: '📷 Scan Crop', route: ROUTES.SCAN, icon: '📷' },
+    { label: '🌱 Grain Quality', route: ROUTES.GRAIN, icon: '🌾' },
+    { label: '👤 Profile', route: ROUTES.PROFILE, icon: '⚙️' },
+  ];
 
   return (
-    <div className="screen-enter">
-      {/* Greeting */}
-      <GreetRow name={user?.name || 'Farmer'} isOnline={isOnline} />
+    <div className="screen-enter" style={{ paddingBottom: 24 }}>
+      {/* Greeting Row */}
+      <GreetRow name={user?.name || 'Nikhil'} isOnline={isOnline} />
+
+      {/* Hero Banner — AgriSphere Companion */}
+      <div
+        style={{
+          background: 'linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%)',
+          color: '#FFFFFF',
+          borderRadius: 22,
+          padding: '20px 22px',
+          marginBottom: 18,
+          boxShadow: '0 10px 30px rgba(46, 125, 50, 0.25)',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        <div style={{ position: 'relative', zIndex: 2 }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255, 255, 255, 0.2)', padding: '4px 12px', borderRadius: 999, fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.8, marginBottom: 8 }}>
+            <span>🌾</span> AgriSphere Companion Active
+          </div>
+          <h2 style={{ fontSize: 20, fontWeight: 800, margin: '0 0 6px', color: '#FFFFFF' }}>
+            Welcome {user?.name || 'Nikhil'} — Meet your AgriSphere Companion
+          </h2>
+          <p style={{ fontSize: 13, opacity: 0.92, margin: 0, maxWidth: 440, lineHeight: 1.4 }}>
+            Your Intelligent Farming Companion — Empowering Every Farmer with AI to diagnose crops, check live weather telemetry, and navigate marketplace rentals.
+          </p>
+        </div>
+      </div>
 
       {/* Live Weather Card Component */}
       <div className="section mb-4">
         <WeatherCard cropType={farmerCrop} />
       </div>
 
+      {/* Material 3 8-Quick Action Grid */}
+      <div className="section" style={{ marginBottom: 18 }}>
+        <div className="section-header" style={{ marginBottom: 10 }}>
+          <span className="eyebrow" style={{ fontSize: 11, fontWeight: 800, color: '#2E7D32', textTransform: 'uppercase', letterSpacing: 0.8 }}>
+            ⚡ Material 3 Quick Actions
+          </span>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
+          {materialQuickActions.map((act, idx) => (
+            <button
+              key={idx}
+              onClick={() => navigate(act.route)}
+              style={{
+                background: '#FFFFFF',
+                border: '1.5px solid #E5E7EB',
+                borderRadius: 16,
+                padding: '14px 8px',
+                textAlign: 'center',
+                cursor: 'pointer',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+              }}
+            >
+              <div style={{ fontSize: 22, marginBottom: 4 }}>{act.icon}</div>
+              <div style={{ fontSize: 11.5, fontWeight: 800, color: '#263238', lineHeight: 1.2 }}>{act.label}</div>
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Platform Overview — 2×2 Stat Grid */}
       <div className="section">
         <div className="section-header">
-          <span className="eyebrow">📊 Platform Overview</span>
+          <span className="eyebrow">📊 Platform Telemetry</span>
         </div>
         <div className="dashboard-grid-2">
           {stats.map((card) => (
@@ -168,25 +227,6 @@ export default function Dashboard() {
           title={t('advTitle')}
           body={t('advBody')}
         />
-      </div>
-
-      {/* Quick Actions — 2×2 Grid */}
-      <div className="section">
-        <div className="section-header">
-          <span className="eyebrow">⚡ Quick Actions</span>
-        </div>
-        <div className="dashboard-grid-2">
-          {actions.map((action) => (
-            <button
-              key={action.route}
-              className={`quick-action-btn ${action.variant}`}
-              onClick={() => navigate(action.route)}
-            >
-              <span className="qab-icon">{action.icon}</span>
-              {action.label}
-            </button>
-          ))}
-        </div>
       </div>
 
       {/* Recent Activity — Database-Driven */}

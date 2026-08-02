@@ -41,3 +41,9 @@ export const getKnowledgeBase = () =>
 /** Get single disease knowledge card. */
 export const getDiseaseCard = (diseaseCode) =>
   client.get(`/api/v1/crop/knowledge-base/${diseaseCode}`);
+
+/** Download official ICAR & AgriSphere AI Crop Diagnostic PDF Report. */
+export const downloadCropReport = (sessionId) => {
+  const baseURL = import.meta.env.VITE_API_BASE || '';
+  window.open(`${baseURL}/api/v1/crop/report/${sessionId}`, '_blank');
+};
